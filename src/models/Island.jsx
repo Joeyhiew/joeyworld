@@ -42,6 +42,12 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
     setIsRotating(false);
   };
 
+  const handlePointerLeave = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    setIsRotating(false);
+  };
+
   // Handle pointer (mouse or touch) move event
   const handlePointerMove = (event) => {
     event.stopPropagation();
@@ -144,6 +150,7 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
     canvas.addEventListener('touchstart', handleTouchStart);
     canvas.addEventListener('touchend', handleTouchEnd);
     canvas.addEventListener('touchmove', handleTouchMove);
+    canvas.addEventListener('mouseleave', handlePointerLeave);
 
     // Remove event listeners when component unmounts
     return () => {
@@ -153,6 +160,7 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
       canvas.removeEventListener('touchstart', handleTouchStart);
       canvas.removeEventListener('touchend', handleTouchEnd);
       canvas.removeEventListener('touchmove', handleTouchMove);
+      canvas.removeEventListener('mouseleave', handlePointerLeave);
     };
   }, [gl, handlePointerDown, handlePointerUp, handlePointerMove]);
 

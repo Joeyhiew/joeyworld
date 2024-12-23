@@ -27,7 +27,6 @@ import contact from './contact.svg';
 import soundon from './soundon.png';
 import soundoff from './soundoff.png';
 import mail from './mail.svg';
-import linkedin1 from './linkedin1.svg';
 
 export {
   css,

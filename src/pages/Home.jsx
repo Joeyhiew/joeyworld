@@ -1,7 +1,7 @@
-import { Suspense, useEffect } from 'react';
+import { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import Popup from '../components/Popup.jsx';
-import { Environment, Html } from '@react-three/drei';
+import { Environment } from '@react-three/drei';
 import { useControls } from 'leva';
 import Loader from '../components/Loader';
 import Island from '../models/Island';
@@ -10,7 +10,6 @@ import Plane from '../models/Plane';
 import { useState } from 'react';
 import { useAdjustGlobeForScreenSize } from '../hooks/useAdjustGlobeForScreenSize.js';
 import { useAdjustPlaneForScreenSize } from '../hooks/useAdjustPlaneForScreenSize.js';
-import Navbar from '../components/Navbar.jsx';
 
 const Home = () => {
   const [isRotating, setIsRotating] = useState(false);

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { arrow, github, linkedin, mail, linkedin1 } from '../assets/icons';
+import { arrow, github, linkedin, mail } from '../assets/icons';
 
 const Popup = ({ currentStage }) => {
   if (currentStage === 1)
@@ -48,7 +48,7 @@ const Popup = ({ currentStage }) => {
   if (currentStage === 4) {
     return (
       <div className="info-box">
-        <p className="font-medium sm:text-xl text-center">My main focus lies on the front-end,</p>
+        <p className="font-medium sm:text-xl text-center">My main focus lies on the front-end in</p>
         <br />
         Javascript and React development
         <br />I enjoy building beautiful and interactive applications
@@ -62,13 +62,13 @@ const Popup = ({ currentStage }) => {
         <p className="font-medium sm:text-xl text-center">Want to connect?</p>
         <div className="flex flex-row gap-4">
           <div className="icon-btn">
-            <img src={linkedin1} alt="linkedin" className="w-4 h-4 object-contain" />
+            <img src={linkedin} alt="linkedin" className="w-8 h-8 object-contain" />
           </div>
           <div className="icon-btn">
-            <img src={github} alt="github" className="w-4 h-4 object-contain" />
+            <img src={github} alt="github" className="w-8 h-8 object-contain" />
           </div>
           <div className="icon-btn">
-            <img src={mail} alt="email" className="w-4 h-4 object-contain" />
+            <img src={mail} alt="email" className="w-8 h-8 object-contain" />
           </div>
         </div>
       </div>
