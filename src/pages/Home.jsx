@@ -2,7 +2,6 @@ import { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import Popup from '../components/Popup.jsx';
 import { Environment } from '@react-three/drei';
-import { useControls } from 'leva';
 import Loader from '../components/Loader';
 import Island from '../models/Island';
 import Sky from '../models/Sky';
@@ -19,16 +18,6 @@ const Home = () => {
 
   const [globeScale, globePosition, globeRotation] = useAdjustGlobeForScreenSize();
   const [planeScale, planePosition, planeRotation] = useAdjustPlaneForScreenSize();
-
-  const directionalCtl = useControls('Directional Light', {
-    visible: true,
-    position: {
-      x: 10.3,
-      y: 1.0,
-      z: 4.4,
-    },
-    castShadow: true,
-  });
 
   return (
     <section className="w-full h-screen relative">
@@ -48,9 +37,9 @@ const Home = () => {
           <directionalLight
             // color={'#CB818E'}
             intensity={2}
-            visible={directionalCtl.visible}
-            position={[directionalCtl.position.x, directionalCtl.position.y, directionalCtl.position.z]}
-            castShadow={directionalCtl.castShadow}
+            // visible={directionalCtl.visible}
+            position={[10.3, 1.0, 4.0]}
+            castShadow={true}
             shadow-mapSize-width={4096}
             shadow-mapSize-height={4096}
             shadow-camera-far={20}
