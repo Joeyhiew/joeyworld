@@ -26,7 +26,6 @@ const About = () => {
         <article className="mt-4">
           During my University, I took several internships in companies like Perx technologies (startup), GovTech
           Singapore (government tech agency), and NCS (MNC). After graduation, I joined TikTok as a Frontend developer.
-          Some of the keys project I undertook include ...
         </article>
         <article className="mt-4">
           I enjoy building websites and applications using the MERN stack with a focus in frontend.
