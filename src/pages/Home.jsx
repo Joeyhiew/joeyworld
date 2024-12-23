@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { useAdjustGlobeForScreenSize } from '../hooks/useAdjustGlobeForScreenSize.js';
 import { useAdjustPlaneForScreenSize } from '../hooks/useAdjustPlaneForScreenSize.js';
 import Navbar from '../components/Navbar.jsx';
+import sunset from '../assets/venice_sunset_1k.hdr';
 
 const Home = () => {
   const [isRotating, setIsRotating] = useState(false);
@@ -41,7 +42,7 @@ const Home = () => {
         shadows
       >
         <Suspense fallback={<Loader />}>
-          <Environment preset="sunset" />
+          <Environment files={sunset} />
 
           {/* <directionalLight position={[1, 1, 1]} intensity={2} shadow={true} castShadow={directionalCtl.castShadow} /> */}
           <directionalLight

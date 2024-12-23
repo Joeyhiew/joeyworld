@@ -64,7 +64,7 @@ body:has(.card[data-color='green']:hover) {
   }
 
   .info-box {
-    @apply mx-5 relative flex text-primary-text rounded-3xl flex-col gap-3 max-w-2xl pt-4 pb-12 px-8 justify-center items-center transition-opacity duration-1000 ease-in-out;
+    @apply mx-5 relative flex text-primary-text rounded-3xl flex-col gap-3 max-w-2xl pt-4 pb-12 px-8 justify-center items-center transition-opacity duration-200 ease-in-out;
   }
 
   .cta {
@@ -76,6 +76,6 @@ body:has(.card[data-color='green']:hover) {
   }
 
   .icon-btn {
-    @apply rounded-full w-12 h-12 flex justify-center items-center;
+    @apply rounded-full w-12 h-12 flex justify-center items-center cursor-pointer;
   }
 }

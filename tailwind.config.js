@@ -20,6 +20,7 @@ export default {
         'primary-grey': '#2C2E31',
         'primary-text': '#4f5c5e',
         'primary-text-dark': '#ffffff',
+        'secondary-text-dark': '#aaabac',
       },
       fontFamily: {
         worksans: ['Work Sans', 'sans-serif'],

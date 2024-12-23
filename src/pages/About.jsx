@@ -3,18 +3,19 @@ import { Breadcrumb } from 'antd';
 
 const About = () => {
   return (
-    <section className="mx-64 my-24">
+    <section className="mx-72 my-24">
       <Breadcrumb
+        separator={<p className="text-secondary-text-dark">/</p>}
         items={[
           {
             title: (
               <NavLink to="/" className="items-center justify-center flex font-bold">
-                <p className="text-primary-text">JOEYs WORLD</p>
+                <p className="text-secondary-text-dark">JOEYs WORLD</p>
               </NavLink>
             ),
           },
           {
-            title: 'About',
+            title: <p className="text-secondary-text-dark">About</p>,
           },
         ]}
       />
@@ -34,7 +35,7 @@ const About = () => {
           <p className="text-2xl">Education</p>
           <p className="text-lg mt-2">
             I graduated from Nanyang Technological University with a Bachelors in Engineering Computer Science (Highest
-            Distinction)
+            Distinction).
           </p>
         </article>
       </main>

@@ -1,15 +1,15 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import { Home, About, Projects } from './pages';
+import { WrappedHome, WrappedAbout, WrappedProjects } from './pages';
 
 const App = () => {
   return (
     <main>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/projects" element={<Projects />} />
+          <Route path="/" element={<WrappedHome />} />
+          <Route path="/about" element={<WrappedAbout />} />
+          <Route path="/projects" element={<WrappedProjects />} />
         </Routes>
       </Router>
     </main>

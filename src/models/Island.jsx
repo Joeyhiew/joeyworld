@@ -7,7 +7,7 @@ Title: Fox's islands
 */
 
 import React, { useRef, useEffect } from 'react';
-import { useGLTF } from '@react-three/drei';
+import { Html, useGLTF } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { a } from '@react-spring/three';
 
@@ -113,32 +113,31 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
       }
 
       islandRef.current.rotation.z -= rotationSpeed.current;
-    } else {
-      // When rotating, determine the current stage based on island's orientation
-      const rotation = islandRef.current.rotation.z;
+    }
+    // When rotating, determine the current stage based on island's orientation
+    const rotation = islandRef.current.rotation.z;
 
-      const normalizedRotation = ((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+    const normalizedRotation = ((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
 
-      // Set the current stage based on the island's orientation
-      switch (true) {
-        case normalizedRotation >= 0.8 && normalizedRotation <= 1.2:
-          setCurrentStage(1);
-          break;
-        case normalizedRotation >= 1.85 && normalizedRotation <= 2.3:
-          setCurrentStage(2);
-          break;
-        case normalizedRotation >= 3.25 && normalizedRotation <= 3.9:
-          setCurrentStage(3);
-          break;
-        case normalizedRotation >= 4.45 && normalizedRotation <= 4.85:
-          setCurrentStage(4);
-          break;
-        case normalizedRotation >= 5.35 && normalizedRotation <= 5.75:
-          setCurrentStage(5);
-          break;
-        default:
-          setCurrentStage(null);
-      }
+    // Set the current stage based on the island's orientation
+    switch (true) {
+      case normalizedRotation >= 0.8 && normalizedRotation <= 1.2:
+        setCurrentStage(1);
+        break;
+      case normalizedRotation >= 1.85 && normalizedRotation <= 2.3:
+        setCurrentStage(2);
+        break;
+      case normalizedRotation >= 3.25 && normalizedRotation <= 3.9:
+        setCurrentStage(3);
+        break;
+      case normalizedRotation >= 4.45 && normalizedRotation <= 4.85:
+        setCurrentStage(4);
+        break;
+      case normalizedRotation >= 5.35 && normalizedRotation <= 5.75:
+        setCurrentStage(5);
+        break;
+      default:
+        setCurrentStage(null);
     }
   });
   useEffect(() => {

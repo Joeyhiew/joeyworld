@@ -22,6 +22,7 @@ import threads from './threads.svg';
 import arrow from './arrow.svg';
 import contact from './contact.svg';
 import mail from './mail.svg';
+import geometry from './geometryBG.jpeg';
 
 export {
   css,
@@ -48,4 +49,5 @@ export {
   arrow,
   contact,
   mail,
+  geometry,
 };
