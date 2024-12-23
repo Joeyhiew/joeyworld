@@ -8,7 +8,7 @@ export const useAdjustGlobeForScreenSize = () => {
 
   const adjustGlobeForScreenSize = () => {
     let screenScale = null;
-    let screenPosition = [0, -2.5, 0];
+    let screenPosition = [0, -2.5, 2];
     // let rotation = [0, Math.PI / 2, 0];
     let rotation = [0, 0, 0];
 

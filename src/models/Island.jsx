@@ -11,7 +11,7 @@ import { useGLTF } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { a } from '@react-spring/three';
 
-import islandScene from '../assets/3d/joeyworld.glb';
+import islandScene from '../assets/3d/joeyworldv3.glb';
 
 const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props }) => {
   const islandRef = useRef();
@@ -55,35 +55,13 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
       const delta = (clientX - lastX.current) / viewport.width;
 
       // Update the island's rotation based on the mouse/touch movement
-      islandRef.current.rotation.z += delta * 0.01 * Math.PI;
+      islandRef.current.rotation.z -= delta * 0.005 * Math.PI;
 
       // Update the reference for the last clientX position
       lastX.current = clientX;
 
       // Update the rotation speed
-      rotationSpeed.current = delta * 0.01 * Math.PI;
-    }
-  };
-
-  // Handle keydown events
-  const handleKeyDown = (event) => {
-    if (event.key === 'ArrowLeft') {
-      if (!isRotating) setIsRotating(true);
-
-      islandRef.current.rotation.z += 0.005 * Math.PI;
-      rotationSpeed.current = 0.0125;
-    } else if (event.key === 'ArrowRight') {
-      if (!isRotating) setIsRotating(true);
-
-      islandRef.current.rotation.z -= 0.005 * Math.PI;
-      rotationSpeed.current = -0.0125;
-    }
-  };
-
-  // Handle keyup events
-  const handleKeyUp = (event) => {
-    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-      setIsRotating(false);
+      rotationSpeed.current = delta * 0.005 * Math.PI;
     }
   };
 
@@ -111,9 +89,9 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;
       const delta = (clientX - lastX.current) / viewport.width;
 
-      islandRef.current.rotation.z += delta * 0.01 * Math.PI;
+      islandRef.current.rotation.z -= delta * 0.005 * Math.PI;
       lastX.current = clientX;
-      rotationSpeed.current = delta * 0.01 * Math.PI;
+      rotationSpeed.current = delta * 0.005 * Math.PI;
     }
   };
 
@@ -128,7 +106,7 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
         rotationSpeed.current = 0;
       }
 
-      islandRef.current.rotation.z += rotationSpeed.current;
+      islandRef.current.rotation.z -= rotationSpeed.current;
     } else {
       // When rotating, determine the current stage based on island's orientation
       const rotation = islandRef.current.rotation.z;
@@ -163,8 +141,6 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
     canvas.addEventListener('pointerdown', handlePointerDown);
     canvas.addEventListener('pointerup', handlePointerUp);
     canvas.addEventListener('pointermove', handlePointerMove);
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('keyup', handleKeyUp);
     canvas.addEventListener('touchstart', handleTouchStart);
     canvas.addEventListener('touchend', handleTouchEnd);
     canvas.addEventListener('touchmove', handleTouchMove);
@@ -174,8 +150,6 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
       canvas.removeEventListener('pointerdown', handlePointerDown);
       canvas.removeEventListener('pointerup', handlePointerUp);
       canvas.removeEventListener('pointermove', handlePointerMove);
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('keyup', handleKeyUp);
       canvas.removeEventListener('touchstart', handleTouchStart);
       canvas.removeEventListener('touchend', handleTouchEnd);
       canvas.removeEventListener('touchmove', handleTouchMove);
@@ -191,36 +165,50 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
             <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
               <group position={[0, 0, -15]}>
                 <mesh
+                  castShadow
+                  receiveShadow
                   geometry={nodes.Cylinder_1_Cylinder_Mat_0.geometry}
                   material={materials.material}
                   position={[334.838, 464.993, 2.5]}
                 />
                 <mesh
+                  castShadow
+                  receiveShadow
                   geometry={nodes.Cylinder_1_Cylinder_1_Cylinder_1_Cylinder_3_Mat2_0.geometry}
                   material={materials['Mat.2']}
                   position={[400, 453.681, 30.5]}
                 />
                 <mesh
+                  castShadow
+                  receiveShadow
                   geometry={nodes.Cylinder_1_Cylinder_2_Mat1_0.geometry}
                   material={materials['Mat.1']}
                   position={[301.01, 493.809, -25.5]}
                 />
                 <mesh
+                  castShadow
+                  receiveShadow
                   geometry={nodes.Extrude_Mat2_0.geometry}
                   material={materials['Mat.2']}
                   position={[281.282, 305.197, 22.471]}
                 />
                 <mesh
+                  castShadow
+                  receiveShadow
                   geometry={nodes.Tube_Mat2_0.geometry}
                   material={materials['Mat.2']}
                   position={[558.402, 71.704, 15]}
                 />
                 <mesh
+                  castShadow
+                  receiveShadow
                   geometry={nodes.Tube_1_Mat_0.geometry}
                   material={materials.material}
                   position={[569.917, 71.704, 15]}
                 />
                 <mesh
+                  castShadow
+                  receiveShadow
                   geometry={nodes.Tube_2_Mat1_0.geometry}
                   material={materials['Mat.1']}
                   position={[547.396, 71.704, 15]}
@@ -232,12 +220,16 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
             <group rotation={[Math.PI / 2, 0, 0]}>
               <group position={[-0.627, 0.859, -7.095]} rotation={[0, Math.PI / 4, Math.PI / 2]}>
                 <mesh
+                  castShadow
+                  receiveShadow
                   geometry={nodes.Object_6.geometry}
                   material={materials['Material.008']}
                   position={[0.12, 0.356, 0.426]}
                   scale={0.844}
                 />
                 <mesh
+                  castShadow
+                  receiveShadow
                   geometry={nodes.Object_7.geometry}
                   material={materials['Material.009']}
                   position={[0.12, 0.356, 0.426]}
@@ -246,6 +238,8 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
               </group>
               <group position={[0, 1.167, 0]} rotation={[0, Math.PI / 4, 0]} scale={[3.33, 1.243, 3.33]}>
                 <mesh
+                  castShadow
+                  receiveShadow
                   geometry={nodes.Object_4.geometry}
                   material={materials['Material.007']}
                   position={[0.107, 0.058, -0.128]}
@@ -254,6 +248,8 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
               </group>
               <group position={[0, 3.642, 0]} scale={[5.968, 1, 0.481]}>
                 <mesh
+                  castShadow
+                  receiveShadow
                   geometry={nodes.Object_9.geometry}
                   material={materials['Material.008']}
                   position={[-0.008, -0.313, -1.148]}
@@ -262,863 +258,124 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
               </group>
             </group>
           </group>
-          <group position={[-1.124, 0.223, 0.58]} rotation={[-0.712, -0.965, 0.277]} scale={0.001}>
+          <group position={[-1.112, 0.164, 0.587]} rotation={[-0.712, -0.965, 0.277]} scale={0.001}>
             <group rotation={[Math.PI / 2, 0, 0]}>
-              <group position={[-370.549, -380.402, 88.51]} rotation={[-1.191, -0.466, 1.228]} scale={68.017}>
+              <group position={[-370.548, -380.402, 88.51]} rotation={[-1.191, -0.466, 1.228]} scale={68.017}>
                 <mesh
+                  castShadow
+                  receiveShadow
                   geometry={nodes.keyboard_1_Material001_0.geometry}
                   material={materials['Material.010']}
-                  position={[1.493, -2.889, 0.028]}
-                  rotation={[-0.038, 0.118, -0.327]}
+                  position={[2.386, -1.562, -0.229]}
+                  rotation={[-0.261, 0.201, -0.354]}
                 />
-                <mesh geometry={nodes.keyboard_1_Material002_0.geometry} material={materials['Material.013']} />
-                <mesh geometry={nodes.keyboard_1_Material004_0.geometry} material={materials['Material.014']} />
                 <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.keyboard_1_Material002_0.geometry}
+                  material={materials['Material.013']}
+                />
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.keyboard_1_Material004_0.geometry}
+                  material={materials['Material.014']}
+                />
+                <mesh
+                  castShadow
+                  receiveShadow
                   geometry={nodes.keyboard_1_Material006_0.geometry}
                   material={materials['Material.011']}
-                  position={[1.493, -2.889, 0.028]}
-                  rotation={[-0.038, 0.118, -0.327]}
+                  position={[2.386, -1.562, -0.229]}
+                  rotation={[-0.261, 0.201, -0.354]}
                 />
                 <mesh
+                  castShadow
+                  receiveShadow
                   geometry={nodes.keyboard_1_Material007_0.geometry}
                   material={materials['Material.012']}
-                  position={[1.493, -2.889, 0.028]}
-                  rotation={[-0.038, 0.118, -0.327]}
+                  position={[2.386, -1.562, -0.229]}
+                  rotation={[-0.261, 0.201, -0.354]}
                 />
               </group>
-              <group position={[-248.702, -16.366, 106.766]} rotation={[-1.329, -0.458, 0.836]} scale={68.017}>
-                <mesh geometry={nodes.monitor_1_Material001_0.geometry} material={materials['Material.010']} />
-                <mesh geometry={nodes.monitor_1_Material002_0.geometry} material={materials['Material.013']} />
-                <mesh geometry={nodes.monitor_1_Material004_0.geometry} material={materials['Material.014']} />
-                <mesh geometry={nodes.monitor_1_Material006_0.geometry} material={materials['Material.011']} />
-                <mesh geometry={nodes.monitor_1_Material007_0.geometry} material={materials['Material.012']} />
-                <mesh geometry={nodes.monitor_1_Material009_0.geometry} material={materials['Material.015']} />
+              <group position={[-331.053, -39.154, -35.522]} rotation={[-1.532, -0.617, 0.67]} scale={68.017}>
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.monitor_1_Material001_0.geometry}
+                  material={materials['Material.010']}
+                />
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.monitor_1_Material002_0.geometry}
+                  material={materials['Material.013']}
+                />
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.monitor_1_Material004_0.geometry}
+                  material={materials['Material.014']}
+                />
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.monitor_1_Material006_0.geometry}
+                  material={materials['Material.011']}
+                />
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.monitor_1_Material007_0.geometry}
+                  material={materials['Material.012']}
+                />
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.monitor_1_Material009_0.geometry}
+                  material={materials['Material.015']}
+                />
               </group>
             </group>
           </group>
           <group position={[-0.811, 0.701, 0.716]} rotation={[-1.523, -0.763, -0.817]} scale={0.018}>
             <mesh
+              castShadow
+              receiveShadow
               geometry={nodes.Object_7001.geometry}
               material={materials.initialShadingGroup_1}
-              position={[-10.628, 14.093, -1.759]}
+              position={[-10.581, 14.055, -2.032]}
               scale={0.675}
             />
             <mesh
+              castShadow
+              receiveShadow
               geometry={nodes.Object_9001.geometry}
               material={materials.initialShadingGroup_0}
-              position={[-10.628, 14.093, -1.759]}
+              position={[-11.907, 15.078, -2.043]}
               scale={0.675}
             />
             <mesh
+              castShadow
+              receiveShadow
               geometry={nodes.Object_11.geometry}
               material={materials.initialShadingGroup}
-              position={[-10.623, 14.083, -1.615]}
+              position={[-11.903, 15.068, -1.899]}
               scale={0.675}
             />
             <mesh
+              castShadow
+              receiveShadow
               geometry={nodes.Object_3.geometry}
               material={materials.initialShadingGroup_3}
-              position={[-10.628, 14.093, -1.759]}
+              position={[-11.907, 15.078, -2.043]}
               scale={0.675}
             />
-          </group>
-          <group position={[0.353, 0.954, -0.036]} rotation={[-1.573, 0.061, -3.053]} scale={0.011}>
-            <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
-              <group position={[0, -0.002, 0]}>
-                <group position={[1.297, -19.32, -3.022]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                  <mesh geometry={nodes.Circle_bark_0.geometry} material={materials.bark} />
-                  <mesh geometry={nodes.Circle_bark_bottom_0.geometry} material={materials.bark_bottom} />
-                  <mesh geometry={nodes.Circle_bark_mid_0.geometry} material={materials.bark_mid} />
-                </group>
-                <group position={[1.297, -19.32, -3.022]} rotation={[1.124, 0.697, -2.761]} scale={149.817}>
-                  <mesh geometry={nodes.Circle002_bark_0.geometry} material={materials.bark} />
-                  <mesh geometry={nodes.Circle002_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Circle002_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Circle002_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group position={[1.297, -19.321, -3.022]} rotation={[1.732, 0.451, 2.785]} scale={94.993}>
-                  <mesh geometry={nodes.Circle003_bark_0.geometry} material={materials.bark} />
-                  <mesh geometry={nodes.Circle003_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Circle003_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Circle003_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group position={[1.297, -19.321, -3.022]} rotation={[0.984, -0.255, -1.23]} scale={62.275}>
-                  <mesh geometry={nodes.Circle004_bark_0.geometry} material={materials.bark} />
-                  <mesh geometry={nodes.Circle004_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Circle004_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Circle004_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group position={[1.297, -19.32, -3.022]} rotation={[2.136, 0.49, 2.064]} scale={104.972}>
-                  <mesh geometry={nodes.Circle006_bark_0.geometry} material={materials.bark} />
-                  <mesh geometry={nodes.Circle006_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Circle006_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Circle006_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group position={[1.296, -19.322, -3.022]} rotation={[0.531, -0.777, -1.352]} scale={93.091}>
-                  <mesh geometry={nodes.Circle007_bark_0.geometry} material={materials.bark} />
-                  <mesh geometry={nodes.Circle007_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Circle007_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Circle007_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group position={[1.297, -19.32, -3.022]} rotation={[-3.081, 0.564, 1.777]} scale={69.913}>
-                  <mesh geometry={nodes.Circle008_bark_0.geometry} material={materials.bark} />
-                  <mesh geometry={nodes.Circle008_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Circle008_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Circle008_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group position={[1.298, -19.321, -3.022]} rotation={[1.689, 1.008, 2.804]} scale={107.569}>
-                  <mesh geometry={nodes.Circle009_bark_0.geometry} material={materials.bark} />
-                  <mesh geometry={nodes.Circle009_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Circle009_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Circle009_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group position={[1.297, -19.321, -3.022]} rotation={[0.058, -1.258, -1.228]} scale={91.711}>
-                  <mesh geometry={nodes.Circle010_bark_0.geometry} material={materials.bark} />
-                  <mesh geometry={nodes.Circle010_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Circle010_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Circle010_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group position={[1.297, -19.32, -3.022]} rotation={[2.404, -0.418, 0.986]} scale={97.879}>
-                  <mesh geometry={nodes.Circle013_bark_0.geometry} material={materials.bark} />
-                  <mesh geometry={nodes.Circle013_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Circle013_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Circle013_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group position={[1.296, -19.32, -3.022]} rotation={[1.756, -1.05, 0.075]} scale={91.585}>
-                  <mesh geometry={nodes.Circle014_bark_0.geometry} material={materials.bark} />
-                  <mesh geometry={nodes.Circle014_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Circle014_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Circle014_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group position={[1.296, -19.322, -3.023]} rotation={[0.739, 0.615, -1.722]} scale={103.45}>
-                  <mesh geometry={nodes.Circle015_bark_0.geometry} material={materials.bark} />
-                  <mesh geometry={nodes.Circle015_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Circle015_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Circle015_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group position={[1.297, -19.321, -3.022]} rotation={[0.412, 0.339, -1.624]} scale={85.488}>
-                  <mesh geometry={nodes.Circle016_bark_0.geometry} material={materials.bark} />
-                  <mesh geometry={nodes.Circle016_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Circle016_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Circle016_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group
-                  position={[1.297, -19.32, -3.022]}
-                  rotation={[-2.947, -1.167, -2.746]}
-                  scale={[-67.028, -285.895, -285.895]}
-                >
-                  <mesh geometry={nodes.Plane001_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Plane001_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Plane001_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group
-                  position={[1.297, -19.32, -3.022]}
-                  rotation={[0.04, 0.282, 0.143]}
-                  scale={[-67.028, -285.895, -285.895]}
-                >
-                  <mesh geometry={nodes.Plane002_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Plane002_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Plane002_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group
-                  position={[1.296, -19.321, -3.022]}
-                  rotation={[0.279, 0.054, -1.098]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane003_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Plane003_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Plane003_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group
-                  position={[1.297, -19.321, -3.022]}
-                  rotation={[2.863, -0.057, 2.054]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane004_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Plane004_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Plane004_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group
-                  position={[1.297, -19.321, -3.022]}
-                  rotation={[1.991, 1.261, -3.095]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane005_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Plane005_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Plane005_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group
-                  position={[1.296, -19.321, -3.022]}
-                  rotation={[1.253, -1.276, 0.145]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane006_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Plane006_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Plane006_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group
-                  position={[1.297, -19.32, -3.022]}
-                  rotation={[0.579, 0.836, -1.41]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane007_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Plane007_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Plane007_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group
-                  position={[1.297, -19.321, -3.022]}
-                  rotation={[2.709, -0.857, 1.734]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane008_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Plane008_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Plane008_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group
-                  position={[1.296, -19.322, -3.022]}
-                  rotation={[2.805, 0.57, 2.243]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane010_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Plane010_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Plane010_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group
-                  position={[1.297, -19.32, -3.022]}
-                  rotation={[0.602, -0.345, -0.343]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane011_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Plane011_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Plane011_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group
-                  position={[1.297, -19.321, -3.022]}
-                  rotation={[0.434, -0.856, -0.746]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane012_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Plane012_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Plane012_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group
-                  position={[1.297, -19.321, -3.022]}
-                  rotation={[2.71, 0.854, 2.404]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane013_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Plane013_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Plane013_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group
-                  position={[1.296, -19.322, -3.022]}
-                  rotation={[0.374, 0.705, -1.334]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane014_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Plane014_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Plane014_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <group
-                  position={[1.297, -19.32, -3.022]}
-                  rotation={[2.781, -0.672, 1.816]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane015_branch1_0.geometry} material={materials.branch1} />
-                  <mesh geometry={nodes.Plane015_branch2_0.geometry} material={materials.branch2} />
-                  <mesh geometry={nodes.Plane015_branch3_0.geometry} material={materials.branch3} />
-                </group>
-                <mesh
-                  geometry={nodes.Circle005_bark_mid_0.geometry}
-                  material={materials.bark_mid}
-                  position={[1.297, -19.32, -3.022]}
-                  rotation={[-0.403, 0.072, -1.54]}
-                  scale={13.835}
-                />
-                <mesh
-                  geometry={nodes.Circle031_bark_0.geometry}
-                  material={materials.bark}
-                  position={[1.297, -19.32, -3.022]}
-                  rotation={[2.837, -0.31, 1.518]}
-                  scale={15.246}
-                />
-              </group>
-            </group>
-          </group>
-          <group position={[0.452, 0.999, -0.036]} rotation={[-1.586, 0.125, -0.808]} scale={0.008}>
-            <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
-              <group position={[0, -0.001, 0]}>
-                <group position={[0, 3.384, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                  <mesh geometry={nodes.Circle_bark_0001.geometry} material={materials['bark.001']} />
-                  <mesh geometry={nodes.Circle_bark_bottom_0001.geometry} material={materials['bark_bottom.001']} />
-                  <mesh geometry={nodes.Circle_bark_mid_0001.geometry} material={materials['bark_mid.001']} />
-                </group>
-                <group position={[38.14, 5307.944, 83.014]} rotation={[Math.PI / 2, 0.797, Math.PI]} scale={119.98}>
-                  <mesh geometry={nodes.Circle001_bark_0.geometry} material={materials['bark.001']} />
-                  <mesh geometry={nodes.Circle001_branch1_0.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Circle001_branch2_0.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Circle001_branch3_0.geometry} material={materials['branch3.001']} />
-                </group>
-                <group position={[-48.364, 7317.979, 17.791]} rotation={[0.63, 0.012, -1.604]} scale={172.863}>
-                  <mesh geometry={nodes.Circle002_bark_0001.geometry} material={materials['bark.001']} />
-                  <mesh geometry={nodes.Circle002_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Circle002_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Circle002_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group position={[-67.872, 6482.975, -81.546]} rotation={[0.803, -0.855, -0.8]} scale={119.98}>
-                  <mesh geometry={nodes.Circle003_bark_0001.geometry} material={materials['bark.001']} />
-                  <mesh geometry={nodes.Circle003_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Circle003_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Circle003_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group position={[52.838, 6630.421, 53.789]} rotation={[2.738, 0.875, 1.888]} scale={95.6}>
-                  <mesh geometry={nodes.Circle004_bark_0001.geometry} material={materials['bark.001']} />
-                  <mesh geometry={nodes.Circle004_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Circle004_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Circle004_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group position={[17.902, 7337.982, -57.831]} rotation={[2.22, -0.832, 0.633]} scale={154.316}>
-                  <mesh geometry={nodes.Circle005_bark_0.geometry} material={materials['bark.001']} />
-                  <mesh geometry={nodes.Circle005_branch1_0.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Circle005_branch2_0.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Circle005_branch3_0.geometry} material={materials['branch3.001']} />
-                </group>
-                <group position={[12.77, 7303.202, 51.437]} rotation={[0.94, 0.966, -2.503]} scale={143.435}>
-                  <mesh geometry={nodes.Circle006_bark_0001.geometry} material={materials['bark.001']} />
-                  <mesh geometry={nodes.Circle006_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Circle006_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Circle006_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group position={[-15.025, 7933.47, -67.271]} rotation={[2.308, -1.232, 0.66]} scale={88.968}>
-                  <mesh geometry={nodes.Circle007_bark_0001.geometry} material={materials['bark.001']} />
-                  <mesh geometry={nodes.Circle007_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Circle007_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Circle007_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group position={[13.381, 8265.34, -27.373]} rotation={[-2.807, 0.976, 1.444]} scale={78.715}>
-                  <mesh geometry={nodes.Circle008_bark_0001.geometry} material={materials['bark.001']} />
-                  <mesh geometry={nodes.Circle008_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Circle008_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Circle008_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group position={[12.769, 8147.92, 14.402]} rotation={[1.636, 0.965, 2.932]} scale={125.338}>
-                  <mesh geometry={nodes.Circle009_bark_0001.geometry} material={materials['bark.001']} />
-                  <mesh geometry={nodes.Circle009_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Circle009_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Circle009_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group position={[-26.838, 8189.849, -70.993]} rotation={[-0.101, -1.066, -1.408]} scale={94.869}>
-                  <mesh geometry={nodes.Circle010_bark_0001.geometry} material={materials['bark.001']} />
-                  <mesh geometry={nodes.Circle010_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Circle010_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Circle010_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group position={[61.139, 7293.428, -44.724]} rotation={[2.32, -0.231, 1.388]} scale={172.863}>
-                  <mesh geometry={nodes.Circle011_bark_0.geometry} material={materials['bark.001']} />
-                  <mesh geometry={nodes.Circle011_branch1_0.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Circle011_branch2_0.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Circle011_branch3_0.geometry} material={materials['branch3.001']} />
-                </group>
-                <group position={[-104.707, 6389.587, 23.232]} rotation={[0.396, 0.616, -1.808]} scale={119.98}>
-                  <mesh geometry={nodes.Circle012_bark_0.geometry} material={materials['bark.001']} />
-                  <mesh geometry={nodes.Circle012_branch1_0.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Circle012_branch2_0.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Circle012_branch3_0.geometry} material={materials['branch3.001']} />
-                </group>
-                <group position={[42.706, 7817.254, -18.907]} rotation={[2.516, 0.442, 1.673]} scale={154.316}>
-                  <mesh geometry={nodes.Circle013_bark_0001.geometry} material={materials['bark.001']} />
-                  <mesh geometry={nodes.Circle013_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Circle013_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Circle013_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group position={[-30.574, 7540.439, -27.102]} rotation={[0.326, -0.695, -1.464]} scale={97.14}>
-                  <mesh geometry={nodes.Circle014_bark_0001.geometry} material={materials['bark.001']} />
-                  <mesh geometry={nodes.Circle014_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Circle014_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Circle014_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group position={[-51.468, 7751.615, 11.69]} rotation={[0.21, 0.549, -1.288]} scale={149.233}>
-                  <mesh geometry={nodes.Circle015_bark_0001.geometry} material={materials['bark.001']} />
-                  <mesh geometry={nodes.Circle015_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Circle015_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Circle015_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group position={[-54.644, 8036.361, -36.685]} rotation={[-0.151, 0.064, -1.42]} scale={115.232}>
-                  <mesh geometry={nodes.Circle016_bark_0001.geometry} material={materials['bark.001']} />
-                  <mesh geometry={nodes.Circle016_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Circle016_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Circle016_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group position={[5.875, 7981.329, -68.671]} rotation={[-2.932, 0.009, 1.467]} scale={76.436}>
-                  <mesh geometry={nodes.Circle017_bark_0.geometry} material={materials['bark.001']} />
-                  <mesh geometry={nodes.Circle017_branch1_0.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Circle017_branch2_0.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Circle017_branch3_0.geometry} material={materials['branch3.001']} />
-                </group>
-                <group
-                  position={[16.171, 8575.264, -13.121]}
-                  rotation={[0.04, 0.282, 0.143]}
-                  scale={[-67.028, -285.895, -285.895]}
-                >
-                  <mesh geometry={nodes.Plane002_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Plane002_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Plane002_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group
-                  position={[18.113, 8551.562, -25.265]}
-                  rotation={[0.279, 0.054, -1.098]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane003_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Plane003_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Plane003_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group
-                  position={[18.113, 8551.562, -25.265]}
-                  rotation={[2.863, -0.057, 2.054]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane004_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Plane004_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Plane004_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group
-                  position={[18.113, 8551.562, -25.265]}
-                  rotation={[1.991, 1.261, -3.095]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane005_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Plane005_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Plane005_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group
-                  position={[18.113, 8551.562, -25.265]}
-                  rotation={[1.253, -1.276, 0.145]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane006_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Plane006_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Plane006_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group
-                  position={[37.328, 8897.122, -10.201]}
-                  rotation={[0.579, 0.836, -1.41]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane007_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Plane007_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Plane007_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group
-                  position={[37.328, 8897.122, -10.201]}
-                  rotation={[2.709, -0.857, 1.734]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane008_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Plane008_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Plane008_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group
-                  position={[37.328, 8897.122, -10.201]}
-                  rotation={[2.805, 0.57, 2.243]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane010_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Plane010_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Plane010_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group
-                  position={[37.328, 8897.122, -10.201]}
-                  rotation={[0.602, -0.345, -0.343]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane011_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Plane011_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Plane011_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group
-                  position={[25.534, 8774.898, -17.099]}
-                  rotation={[0.434, -0.856, -0.746]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane012_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Plane012_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Plane012_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group
-                  position={[25.534, 8774.898, -17.099]}
-                  rotation={[2.71, 0.854, 2.404]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane013_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Plane013_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Plane013_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group
-                  position={[25.534, 8774.898, -17.099]}
-                  rotation={[0.374, 0.705, -1.334]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane014_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Plane014_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Plane014_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <group
-                  position={[25.534, 8774.898, -17.099]}
-                  rotation={[2.781, -0.672, 1.816]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane015_branch1_0001.geometry} material={materials['branch1.001']} />
-                  <mesh geometry={nodes.Plane015_branch2_0001.geometry} material={materials['branch2.001']} />
-                  <mesh geometry={nodes.Plane015_branch3_0001.geometry} material={materials['branch3.001']} />
-                </group>
-                <mesh
-                  geometry={nodes.Circle018_bark_mid_0.geometry}
-                  material={materials['bark_mid.001']}
-                  position={[83.749, 1025.213, -11.269]}
-                  rotation={[-Math.PI / 2, 1.169, 0]}
-                  scale={11.791}
-                />
-                <mesh
-                  geometry={nodes.Circle019_bark_mid_0.geometry}
-                  material={materials['bark_mid.001']}
-                  position={[-49.271, 1043.092, 64.329]}
-                  rotation={[-0.351, -0.324, -1.687]}
-                  scale={11.791}
-                />
-                <mesh
-                  geometry={nodes.Circle020_bark_mid_0.geometry}
-                  material={materials['bark_mid.001']}
-                  position={[-51.91, 1053.625, -96.937]}
-                  rotation={[-2.729, -0.623, 1.821]}
-                  scale={11.791}
-                />
-                <mesh
-                  geometry={nodes.Circle021_bark_mid_0.geometry}
-                  material={materials['bark_mid.001']}
-                  position={[22.864, 1626.124, -95.154]}
-                  rotation={[-2.463, 0.224, 1.32]}
-                  scale={11.791}
-                />
-                <mesh
-                  geometry={nodes.Circle022_bark_mid_0.geometry}
-                  material={materials['bark_mid.001']}
-                  position={[56.967, 1635.869, 68.022]}
-                  rotation={[-0.49, 0.806, -1.203]}
-                  scale={16.789}
-                />
-                <mesh
-                  geometry={nodes.Circle023_bark_mid_0.geometry}
-                  material={materials['bark_mid.001']}
-                  position={[-85.472, 1615.674, 7.406]}
-                  rotation={[-1.052, -1.017, -2.517]}
-                  scale={11.791}
-                />
-                <mesh
-                  geometry={nodes.Circle024_bark_mid_0.geometry}
-                  material={materials['bark_mid.001']}
-                  position={[72.754, 2348.026, -22.21]}
-                  rotation={[-2.135, 0.826, 0.561]}
-                  scale={12.064}
-                />
-                <mesh
-                  geometry={nodes.Circle025_bark_mid_0.geometry}
-                  material={materials['bark_mid.001']}
-                  position={[-20.28, 2349.583, 100.068]}
-                  rotation={[-0.396, 0.033, -1.551]}
-                  scale={15.474}
-                />
-                <mesh
-                  geometry={nodes.Circle026_bark_mid_0.geometry}
-                  material={materials['bark_mid.001']}
-                  position={[-94.33, 2336.844, -44.715]}
-                  rotation={[-2.351, -0.873, 2.263]}
-                  scale={15.474}
-                />
-                <mesh
-                  geometry={nodes.Circle027_bark_mid_0.geometry}
-                  material={materials['bark_mid.001']}
-                  position={[40.276, 3057.285, 38.436]}
-                  rotation={[-0.996, 1.047, -0.758]}
-                  scale={15.738}
-                />
-                <mesh
-                  geometry={nodes.Circle028_bark_mid_0.geometry}
-                  material={materials['bark_mid.001']}
-                  position={[-98.324, 3107.578, 56.477]}
-                  rotation={[-0.196, -0.698, -1.698]}
-                  scale={24.77}
-                />
-                <mesh
-                  geometry={nodes.Circle029_bark_mid_0.geometry}
-                  material={materials['bark_mid.001']}
-                  position={[-47.681, 3060.385, -130.628]}
-                  rotation={[-2.65, -0.257, 1.74]}
-                  scale={20.491}
-                />
-                <mesh
-                  geometry={nodes.Circle030_bark_mid_0.geometry}
-                  material={materials['bark_mid.001']}
-                  position={[-57.841, 4258.626, -30.211]}
-                  rotation={[-1.869, -0.921, 2.93]}
-                  scale={19.343}
-                />
-                <mesh
-                  geometry={nodes.Circle031_bark_mid_0.geometry}
-                  material={materials['bark_mid.001']}
-                  position={[45.759, 3979.957, -93.284]}
-                  rotation={[2.834, 0.471, 1.819]}
-                  scale={12.398}
-                />
-                <mesh
-                  geometry={nodes.Circle032_bark_mid_0.geometry}
-                  material={materials['bark_mid.001']}
-                  position={[-10.037, 3671.255, 59.461]}
-                  rotation={[-0.436, 0.409, -1.542]}
-                  scale={26.261}
-                />
-                <mesh
-                  geometry={nodes.Circle033_bark_mid_0.geometry}
-                  material={materials['bark_mid.001']}
-                  position={[-57.841, 3841.272, -30.211]}
-                  rotation={[-1.882, -0.853, 2.966]}
-                  scale={21.04}
-                />
-                <mesh
-                  geometry={nodes.Circle034_bark_mid_0.geometry}
-                  material={materials['bark_mid.001']}
-                  position={[76.926, 2034.535, 63.289]}
-                  rotation={[-1.964, -1.169, 2.834]}
-                  scale={21.04}
-                />
-              </group>
-            </group>
-          </group>
-          <group position={[0.472, -0.897, -0.22]} rotation={[1.61, 0.578, 0.081]} scale={0.007}>
-            <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
-              <group position={[0.001, 0.001, 0.001]}>
-                <group position={[1.297, -19.32, -3.022]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                  <mesh geometry={nodes.Circle_bark_0004.geometry} material={materials['bark.004']} />
-                  <mesh geometry={nodes.Circle_bark_bottom_0004.geometry} material={materials['bark_bottom.004']} />
-                  <mesh geometry={nodes.Circle_bark_mid_0004.geometry} material={materials['bark_mid.004']} />
-                </group>
-                <group position={[1.297, -19.32, -3.022]} rotation={[1.124, 0.697, -2.761]} scale={149.817}>
-                  <mesh geometry={nodes.Circle002_bark_0004.geometry} material={materials['bark.004']} />
-                  <mesh geometry={nodes.Circle002_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Circle002_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Circle002_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group position={[1.297, -19.319, -3.021]} rotation={[2.136, 0.49, 2.064]} scale={104.972}>
-                  <mesh geometry={nodes.Circle006_bark_0004.geometry} material={materials['bark.004']} />
-                  <mesh geometry={nodes.Circle006_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Circle006_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Circle006_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group position={[1.297, -19.32, -3.021]} rotation={[0.531, -0.777, -1.352]} scale={93.091}>
-                  <mesh geometry={nodes.Circle007_bark_0004.geometry} material={materials['bark.004']} />
-                  <mesh geometry={nodes.Circle007_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Circle007_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Circle007_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group position={[1.297, -19.32, -3.022]} rotation={[-3.081, 0.564, 1.777]} scale={69.913}>
-                  <mesh geometry={nodes.Circle008_bark_0004.geometry} material={materials['bark.004']} />
-                  <mesh geometry={nodes.Circle008_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Circle008_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Circle008_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group position={[1.297, -19.319, -3.022]} rotation={[1.689, 1.008, 2.804]} scale={107.569}>
-                  <mesh geometry={nodes.Circle009_bark_0004.geometry} material={materials['bark.004']} />
-                  <mesh geometry={nodes.Circle009_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Circle009_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Circle009_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group position={[1.297, -19.32, -3.022]} rotation={[0.058, -1.258, -1.228]} scale={91.711}>
-                  <mesh geometry={nodes.Circle010_bark_0003.geometry} material={materials['bark.004']} />
-                  <mesh geometry={nodes.Circle010_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Circle010_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Circle010_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group position={[1.297, -19.319, -3.021]} rotation={[2.404, -0.418, 0.986]} scale={97.879}>
-                  <mesh geometry={nodes.Circle013_bark_0004.geometry} material={materials['bark.004']} />
-                  <mesh geometry={nodes.Circle013_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Circle013_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Circle013_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group position={[1.297, -19.318, -3.022]} rotation={[1.756, -1.05, 0.075]} scale={91.585}>
-                  <mesh geometry={nodes.Circle014_bark_0004.geometry} material={materials['bark.004']} />
-                  <mesh geometry={nodes.Circle014_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Circle014_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Circle014_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group position={[1.297, -19.32, -3.022]} rotation={[0.739, 0.615, -1.722]} scale={103.45}>
-                  <mesh geometry={nodes.Circle015_bark_0004.geometry} material={materials['bark.004']} />
-                  <mesh geometry={nodes.Circle015_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Circle015_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Circle015_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group position={[1.297, -19.32, -3.022]} rotation={[0.412, 0.339, -1.624]} scale={85.488}>
-                  <mesh geometry={nodes.Circle016_bark_0003.geometry} material={materials['bark.004']} />
-                  <mesh geometry={nodes.Circle016_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Circle016_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Circle016_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group position={[1.297, -19.32, -3.022]} rotation={[1.732, 0.451, 2.785]} scale={94.993}>
-                  <mesh geometry={nodes.Circle003_bark_0004.geometry} material={materials['bark.004']} />
-                  <mesh geometry={nodes.Circle003_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Circle003_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Circle003_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group position={[1.297, -19.319, -3.022]} rotation={[0.984, -0.255, -1.23]} scale={62.275}>
-                  <mesh geometry={nodes.Circle004_bark_0004.geometry} material={materials['bark.004']} />
-                  <mesh geometry={nodes.Circle004_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Circle004_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Circle004_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group
-                  position={[1.297, -19.32, -3.022]}
-                  rotation={[0.04, 0.282, 0.143]}
-                  scale={[-67.028, -285.895, -285.895]}
-                >
-                  <mesh geometry={nodes.Plane002_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Plane002_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Plane002_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group
-                  position={[1.297, -19.32, -3.021]}
-                  rotation={[0.279, 0.054, -1.098]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane003_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Plane003_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Plane003_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group
-                  position={[1.297, -19.32, -3.022]}
-                  rotation={[2.863, -0.057, 2.054]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane004_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Plane004_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Plane004_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group
-                  position={[1.297, -19.32, -3.022]}
-                  rotation={[1.991, 1.261, -3.095]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane005_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Plane005_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Plane005_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group
-                  position={[1.297, -19.32, -3.021]}
-                  rotation={[1.253, -1.276, 0.145]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane006_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Plane006_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Plane006_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group
-                  position={[1.297, -19.319, -3.021]}
-                  rotation={[0.579, 0.836, -1.41]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane007_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Plane007_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Plane007_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group
-                  position={[1.297, -19.32, -3.021]}
-                  rotation={[2.709, -0.857, 1.734]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane008_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Plane008_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Plane008_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group
-                  position={[1.296, -19.32, -3.021]}
-                  rotation={[2.805, 0.57, 2.243]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane010_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Plane010_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Plane010_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group
-                  position={[1.297, -19.32, -3.022]}
-                  rotation={[0.602, -0.345, -0.343]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane011_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Plane011_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Plane011_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group
-                  position={[1.297, -19.321, -3.022]}
-                  rotation={[0.434, -0.856, -0.746]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane012_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Plane012_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Plane012_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group
-                  position={[1.297, -19.319, -3.021]}
-                  rotation={[2.71, 0.854, 2.404]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane013_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Plane013_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Plane013_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group
-                  position={[1.297, -19.321, -3.021]}
-                  rotation={[0.374, 0.705, -1.334]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane014_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Plane014_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Plane014_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group
-                  position={[1.297, -19.319, -3.022]}
-                  rotation={[2.781, -0.672, 1.816]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane015_branch1_0004.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Plane015_branch2_0004.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Plane015_branch3_0004.geometry} material={materials['branch3.004']} />
-                </group>
-                <group
-                  position={[1.297, -19.32, -3.022]}
-                  rotation={[-2.947, -1.167, -2.746]}
-                  scale={[-67.028, -285.895, -285.895]}
-                >
-                  <mesh geometry={nodes.Plane001_branch1_0001.geometry} material={materials['branch1.004']} />
-                  <mesh geometry={nodes.Plane001_branch2_0001.geometry} material={materials['branch2.004']} />
-                  <mesh geometry={nodes.Plane001_branch3_0001.geometry} material={materials['branch3.004']} />
-                </group>
-                <mesh
-                  geometry={nodes.Circle031_bark_0001.geometry}
-                  material={materials['bark.004']}
-                  position={[1.297, -19.32, -3.022]}
-                  rotation={[2.837, -0.31, 1.518]}
-                  scale={15.246}
-                />
-                <mesh
-                  geometry={nodes.Circle005_bark_mid_0001.geometry}
-                  material={materials['bark_mid.004']}
-                  position={[1.297, -19.32, -3.022]}
-                  rotation={[-0.403, 0.072, -1.54]}
-                  scale={13.835}
-                />
-              </group>
-            </group>
           </group>
           <group position={[-0.399, -0.934, 0.224]} rotation={[1.551, -0.369, 3.002]} scale={0.046}>
             <mesh
+              castShadow
+              receiveShadow
               geometry={nodes.Object_2007.geometry}
               material={materials.palette}
               position={[1.32, 0.383, 0.031]}
@@ -1126,30 +383,33 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
             />
           </group>
           <group position={[-0.015, 0.036, -0.01]} rotation={[-2.881, -0.252, -3.075]}>
-            <mesh geometry={nodes.Icosphere005.geometry} material={materials['Material.005']} />
-            <mesh geometry={nodes.Icosphere005_1.geometry} material={materials['Material.006']} />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Icosphere005.geometry}
+              material={materials['Material.005']}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Icosphere005_1.geometry}
+              material={materials['Material.006']}
+            />
           </group>
           <mesh
+            castShadow
+            receiveShadow
             geometry={nodes.Icosphere001.geometry}
             material={materials['Material.002']}
             position={[-0.015, 0.036, -0.01]}
             rotation={[-2.881, -0.252, -3.075]}
             scale={1.016}
           />
-          <group position={[-0.815, 0.765, 0.251]} rotation={[-Math.PI / 2, 0, -3.091]} scale={0.001}>
-            <group position={[-228.141, -280.375, -22.734]}>
-              <mesh
-                geometry={nodes.Object_3001.geometry}
-                material={materials['DEFAULT.001']}
-                position={[505.145, -509.64, -1268.541]}
-                rotation={[-3.053, 0.618, -3.113]}
-                scale={0.6}
-              />
-            </group>
-          </group>
           <group position={[-1.197, 0.638, 0.054]} rotation={[-Math.PI / 2, 0, -3.091]} scale={0.001}>
             <group position={[-228.141, -280.375, -22.734]}>
               <mesh
+                castShadow
+                receiveShadow
                 geometry={nodes.Object_3002.geometry}
                 material={materials['DEFAULT.002']}
                 position={[-1712.605, 634.304, 235.115]}
@@ -1161,6 +421,8 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
           <group position={[-1.197, 0.638, 0.054]} rotation={[-Math.PI / 2, 0, -3.091]} scale={0.001}>
             <group position={[-228.141, -280.375, -22.734]}>
               <mesh
+                castShadow
+                receiveShadow
                 geometry={nodes.Object_3003.geometry}
                 material={materials['DEFAULT.003']}
                 position={[-838.602, 1049.164, -1499.816]}
@@ -1172,6 +434,8 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
           <group position={[-1.197, 0.638, 0.054]} rotation={[-Math.PI / 2, 0, -3.091]} scale={0.001}>
             <group position={[-228.141, -280.375, -22.734]}>
               <mesh
+                castShadow
+                receiveShadow
                 geometry={nodes.Object_3004.geometry}
                 material={materials['DEFAULT.004']}
                 position={[-1231.446, -651.636, 594.9]}
@@ -1182,6 +446,8 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
           <group position={[-0.643, -0.399, 0.124]} rotation={[-1.576, 0.072, -3.099]} scale={0.001}>
             <group position={[-228.141, -280.375, -22.734]}>
               <mesh
+                castShadow
+                receiveShadow
                 geometry={nodes.Object_3005.geometry}
                 material={materials['DEFAULT.005']}
                 position={[-1355.968, 891.584, 435.916]}
@@ -1193,6 +459,8 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
           <group position={[-0.691, 0.309, 1.002]} rotation={[-0.418, -1.269, -1.85]} scale={0.001}>
             <group position={[-228.141, -280.375, -22.734]}>
               <mesh
+                castShadow
+                receiveShadow
                 geometry={nodes.Object_3006.geometry}
                 material={materials['DEFAULT.006']}
                 position={[-93.929, -8.695, -57.003]}
@@ -1201,677 +469,11 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
               />
             </group>
           </group>
-          <group position={[-0.633, 0.883, 0.403]} rotation={[-1.942, -0.518, 3.097]} scale={0.196}>
-            <group rotation={[Math.PI / 2, 0, 0]}>
-              <mesh
-                geometry={nodes.Plant_Grass2_Plant_Texture_0002.geometry}
-                material={materials['Plant_Texture.002']}
-                position={[-0.053, 0.038, 0.258]}
-              />
-            </group>
-          </group>
-          <group position={[0.24, 0.883, 0.622]} rotation={[-1.567, -0.093, -2.956]} scale={0.145}>
-            <group rotation={[Math.PI / 2, 0, 0]}>
-              <mesh
-                geometry={nodes.Plant_Fern_Plant_Texture_0001.geometry}
-                material={materials['Plant_Texture.003']}
-                position={[-0.959, -1.133, -0.94]}
-              />
-            </group>
-          </group>
-          <group position={[-0.799, -0.284, 0.469]} rotation={[0.288, -1.153, -0.681]} scale={0.008}>
-            <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
-              <group position={[0, 0, 0]}>
-                <group position={[5.877, 7981.329, -68.671]} rotation={[-2.932, 0.009, 1.467]} scale={76.436}>
-                  <mesh geometry={nodes.Circle017_bark_0001.geometry} material={materials['bark.002']} />
-                  <mesh geometry={nodes.Circle017_branch1_0001.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Circle017_branch2_0001.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Circle017_branch3_0001.geometry} material={materials['branch3.002']} />
-                </group>
-                <group position={[-54.643, 8036.363, -36.684]} rotation={[-0.151, 0.064, -1.42]} scale={115.232}>
-                  <mesh geometry={nodes.Circle016_bark_0002.geometry} material={materials['bark.002']} />
-                  <mesh geometry={nodes.Circle016_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Circle016_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Circle016_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group position={[-51.467, 7751.617, 11.692]} rotation={[0.21, 0.549, -1.288]} scale={149.233}>
-                  <mesh geometry={nodes.Circle015_bark_0002.geometry} material={materials['bark.002']} />
-                  <mesh geometry={nodes.Circle015_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Circle015_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Circle015_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group position={[-30.571, 7540.442, -27.101]} rotation={[0.326, -0.695, -1.464]} scale={97.14}>
-                  <mesh geometry={nodes.Circle014_bark_0002.geometry} material={materials['bark.002']} />
-                  <mesh geometry={nodes.Circle014_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Circle014_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Circle014_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group position={[42.707, 7817.256, -18.906]} rotation={[2.516, 0.442, 1.673]} scale={154.316}>
-                  <mesh geometry={nodes.Circle013_bark_0002.geometry} material={materials['bark.002']} />
-                  <mesh geometry={nodes.Circle013_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Circle013_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Circle013_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group position={[-104.705, 6389.588, 23.232]} rotation={[0.396, 0.616, -1.808]} scale={119.98}>
-                  <mesh geometry={nodes.Circle012_bark_0001.geometry} material={materials['bark.002']} />
-                  <mesh geometry={nodes.Circle012_branch1_0001.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Circle012_branch2_0001.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Circle012_branch3_0001.geometry} material={materials['branch3.002']} />
-                </group>
-                <group position={[61.14, 7293.428, -44.723]} rotation={[2.32, -0.231, 1.388]} scale={172.863}>
-                  <mesh geometry={nodes.Circle011_bark_0001.geometry} material={materials['bark.002']} />
-                  <mesh geometry={nodes.Circle011_branch1_0001.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Circle011_branch2_0001.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Circle011_branch3_0001.geometry} material={materials['branch3.002']} />
-                </group>
-                <group position={[-26.837, 8189.853, -70.993]} rotation={[-0.101, -1.066, -1.408]} scale={94.869}>
-                  <mesh geometry={nodes.Circle010_bark_0002.geometry} material={materials['bark.002']} />
-                  <mesh geometry={nodes.Circle010_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Circle010_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Circle010_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group position={[12.771, 8147.921, 14.403]} rotation={[1.636, 0.965, 2.932]} scale={125.338}>
-                  <mesh geometry={nodes.Circle009_bark_0002.geometry} material={materials['bark.002']} />
-                  <mesh geometry={nodes.Circle009_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Circle009_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Circle009_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group position={[13.382, 8265.341, -27.372]} rotation={[-2.807, 0.976, 1.444]} scale={78.715}>
-                  <mesh geometry={nodes.Circle008_bark_0002.geometry} material={materials['bark.002']} />
-                  <mesh geometry={nodes.Circle008_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Circle008_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Circle008_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group position={[-15.024, 7933.47, -67.27]} rotation={[2.308, -1.232, 0.66]} scale={88.968}>
-                  <mesh geometry={nodes.Circle007_bark_0002.geometry} material={materials['bark.002']} />
-                  <mesh geometry={nodes.Circle007_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Circle007_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Circle007_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group
-                  position={[12.771, 7303.206, 51.436]}
-                  rotation={[0.94, 0.966, -2.503]}
-                  scale={[143.435, 143.435, 143.436]}
-                >
-                  <mesh geometry={nodes.Circle006_bark_0002.geometry} material={materials['bark.002']} />
-                  <mesh geometry={nodes.Circle006_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Circle006_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Circle006_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group position={[17.903, 7337.986, -57.83]} rotation={[2.22, -0.832, 0.633]} scale={154.316}>
-                  <mesh geometry={nodes.Circle005_bark_0001.geometry} material={materials['bark.002']} />
-                  <mesh geometry={nodes.Circle005_branch1_0001.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Circle005_branch2_0001.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Circle005_branch3_0001.geometry} material={materials['branch3.002']} />
-                </group>
-                <group position={[52.84, 6630.422, 53.789]} rotation={[2.738, 0.875, 1.888]} scale={95.6}>
-                  <mesh geometry={nodes.Circle004_bark_0002.geometry} material={materials['bark.002']} />
-                  <mesh geometry={nodes.Circle004_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Circle004_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Circle004_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group position={[-67.87, 6482.975, -81.547]} rotation={[0.803, -0.855, -0.8]} scale={119.98}>
-                  <mesh geometry={nodes.Circle003_bark_0002.geometry} material={materials['bark.002']} />
-                  <mesh geometry={nodes.Circle003_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Circle003_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Circle003_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group position={[-48.364, 7317.983, 17.792]} rotation={[0.63, 0.012, -1.604]} scale={172.863}>
-                  <mesh geometry={nodes.Circle002_bark_0002.geometry} material={materials['bark.002']} />
-                  <mesh geometry={nodes.Circle002_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Circle002_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Circle002_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group position={[38.141, 5307.946, 83.015]} rotation={[Math.PI / 2, 0.797, Math.PI]} scale={119.98}>
-                  <mesh geometry={nodes.Circle001_bark_0001.geometry} material={materials['bark.002']} />
-                  <mesh geometry={nodes.Circle001_branch1_0001.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Circle001_branch2_0001.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Circle001_branch3_0001.geometry} material={materials['branch3.002']} />
-                </group>
-                <group position={[0, 3.385, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                  <mesh geometry={nodes.Circle_bark_0002.geometry} material={materials['bark.002']} />
-                  <mesh geometry={nodes.Circle_bark_bottom_0002.geometry} material={materials['bark_bottom.002']} />
-                  <mesh geometry={nodes.Circle_bark_mid_0002.geometry} material={materials['bark_mid.002']} />
-                </group>
-                <group
-                  position={[25.534, 8774.899, -17.099]}
-                  rotation={[2.781, -0.672, 1.816]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane015_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Plane015_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Plane015_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group
-                  position={[25.534, 8774.899, -17.099]}
-                  rotation={[0.374, 0.705, -1.334]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane014_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Plane014_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Plane014_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group
-                  position={[25.534, 8774.899, -17.099]}
-                  rotation={[2.71, 0.854, 2.404]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane013_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Plane013_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Plane013_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group
-                  position={[25.534, 8774.899, -17.099]}
-                  rotation={[0.434, -0.856, -0.746]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane012_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Plane012_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Plane012_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group
-                  position={[37.329, 8897.125, -10.201]}
-                  rotation={[0.602, -0.345, -0.343]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane011_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Plane011_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Plane011_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group
-                  position={[37.329, 8897.125, -10.201]}
-                  rotation={[2.805, 0.57, 2.243]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane010_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Plane010_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Plane010_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group
-                  position={[37.329, 8897.125, -10.201]}
-                  rotation={[2.709, -0.857, 1.734]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane008_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Plane008_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Plane008_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group
-                  position={[37.329, 8897.125, -10.201]}
-                  rotation={[0.579, 0.836, -1.41]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane007_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Plane007_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Plane007_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group
-                  position={[18.115, 8551.566, -25.264]}
-                  rotation={[1.253, -1.276, 0.145]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane006_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Plane006_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Plane006_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group
-                  position={[18.115, 8551.566, -25.264]}
-                  rotation={[1.991, 1.261, -3.095]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane005_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Plane005_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Plane005_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group
-                  position={[18.115, 8551.566, -25.264]}
-                  rotation={[2.863, -0.057, 2.054]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane004_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Plane004_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Plane004_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group
-                  position={[18.115, 8551.566, -25.264]}
-                  rotation={[0.279, 0.054, -1.098]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane003_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Plane003_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Plane003_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <group
-                  position={[16.173, 8575.266, -13.121]}
-                  rotation={[0.04, 0.282, 0.143]}
-                  scale={[-67.028, -285.895, -285.895]}
-                >
-                  <mesh geometry={nodes.Plane002_branch1_0002.geometry} material={materials['branch1.002']} />
-                  <mesh geometry={nodes.Plane002_branch2_0002.geometry} material={materials['branch2.002']} />
-                  <mesh geometry={nodes.Plane002_branch3_0002.geometry} material={materials['branch3.002']} />
-                </group>
-                <mesh
-                  geometry={nodes.Circle034_bark_mid_0001.geometry}
-                  material={materials['bark_mid.002']}
-                  position={[76.927, 2034.538, 63.291]}
-                  rotation={[-1.964, -1.169, 2.834]}
-                  scale={21.04}
-                />
-                <mesh
-                  geometry={nodes.Circle033_bark_mid_0001.geometry}
-                  material={materials['bark_mid.002']}
-                  position={[-57.84, 3841.274, -30.21]}
-                  rotation={[-1.882, -0.853, 2.966]}
-                  scale={21.04}
-                />
-                <mesh
-                  geometry={nodes.Circle032_bark_mid_0001.geometry}
-                  material={materials['bark_mid.002']}
-                  position={[-10.036, 3671.258, 59.461]}
-                  rotation={[-0.436, 0.409, -1.542]}
-                  scale={26.261}
-                />
-                <mesh
-                  geometry={nodes.Circle031_bark_mid_0001.geometry}
-                  material={materials['bark_mid.002']}
-                  position={[45.76, 3979.959, -93.284]}
-                  rotation={[2.834, 0.471, 1.819]}
-                  scale={12.398}
-                />
-                <mesh
-                  geometry={nodes.Circle030_bark_mid_0001.geometry}
-                  material={materials['bark_mid.002']}
-                  position={[-57.84, 4258.628, -30.211]}
-                  rotation={[-1.869, -0.921, 2.93]}
-                  scale={19.343}
-                />
-                <mesh
-                  geometry={nodes.Circle029_bark_mid_0001.geometry}
-                  material={materials['bark_mid.002']}
-                  position={[-47.681, 3060.387, -130.629]}
-                  rotation={[-2.65, -0.257, 1.74]}
-                  scale={20.491}
-                />
-                <mesh
-                  geometry={nodes.Circle028_bark_mid_0001.geometry}
-                  material={materials['bark_mid.002']}
-                  position={[-98.323, 3107.58, 56.478]}
-                  rotation={[-0.196, -0.698, -1.698]}
-                  scale={24.77}
-                />
-                <mesh
-                  geometry={nodes.Circle027_bark_mid_0001.geometry}
-                  material={materials['bark_mid.002']}
-                  position={[40.277, 3057.29, 38.437]}
-                  rotation={[-0.996, 1.047, -0.758]}
-                  scale={15.738}
-                />
-                <mesh
-                  geometry={nodes.Circle026_bark_mid_0001.geometry}
-                  material={materials['bark_mid.002']}
-                  position={[-94.33, 2336.844, -44.715]}
-                  rotation={[-2.351, -0.873, 2.263]}
-                  scale={15.474}
-                />
-                <mesh
-                  geometry={nodes.Circle025_bark_mid_0001.geometry}
-                  material={materials['bark_mid.002']}
-                  position={[-20.279, 2349.585, 100.069]}
-                  rotation={[-0.396, 0.033, -1.551]}
-                  scale={15.474}
-                />
-                <mesh
-                  geometry={nodes.Circle024_bark_mid_0001.geometry}
-                  material={materials['bark_mid.002']}
-                  position={[72.756, 2348.028, -22.21]}
-                  rotation={[-2.135, 0.826, 0.561]}
-                  scale={12.064}
-                />
-                <mesh
-                  geometry={nodes.Circle023_bark_mid_0001.geometry}
-                  material={materials['bark_mid.002']}
-                  position={[-85.47, 1615.676, 7.405]}
-                  rotation={[-1.052, -1.017, -2.517]}
-                  scale={11.791}
-                />
-                <mesh
-                  geometry={nodes.Circle022_bark_mid_0001.geometry}
-                  material={materials['bark_mid.002']}
-                  position={[56.969, 1635.87, 68.022]}
-                  rotation={[-0.49, 0.806, -1.203]}
-                  scale={16.789}
-                />
-                <mesh
-                  geometry={nodes.Circle021_bark_mid_0001.geometry}
-                  material={materials['bark_mid.002']}
-                  position={[22.865, 1626.126, -95.155]}
-                  rotation={[-2.463, 0.224, 1.32]}
-                  scale={11.791}
-                />
-                <mesh
-                  geometry={nodes.Circle020_bark_mid_0001.geometry}
-                  material={materials['bark_mid.002']}
-                  position={[-51.909, 1053.626, -96.936]}
-                  rotation={[-2.729, -0.623, 1.821]}
-                  scale={11.791}
-                />
-                <mesh
-                  geometry={nodes.Circle019_bark_mid_0001.geometry}
-                  material={materials['bark_mid.002']}
-                  position={[-49.27, 1043.092, 64.33]}
-                  rotation={[-0.351, -0.324, -1.687]}
-                  scale={11.791}
-                />
-                <mesh
-                  geometry={nodes.Circle018_bark_mid_0001.geometry}
-                  material={materials['bark_mid.002']}
-                  position={[83.75, 1025.213, -11.269]}
-                  rotation={[-Math.PI / 2, 1.169, 0]}
-                  scale={11.791}
-                />
-              </group>
-            </group>
-          </group>
-          <group position={[0.399, -0.912, -0.275]} rotation={[1.613, 0.405, -1.285]} scale={0.006}>
-            <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
-              <group position={[0, -0.001, 0]}>
-                <group position={[0, 3.385, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
-                  <mesh geometry={nodes.Circle_bark_0003.geometry} material={materials['bark.003']} />
-                  <mesh geometry={nodes.Circle_bark_bottom_0003.geometry} material={materials['bark_bottom.003']} />
-                  <mesh geometry={nodes.Circle_bark_mid_0003.geometry} material={materials['bark_mid.003']} />
-                </group>
-                <group position={[38.139, 5307.946, 83.016]} rotation={[Math.PI / 2, 0.797, Math.PI]} scale={119.98}>
-                  <mesh geometry={nodes.Circle001_bark_0002.geometry} material={materials['bark.003']} />
-                  <mesh geometry={nodes.Circle001_branch1_0002.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Circle001_branch2_0002.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Circle001_branch3_0002.geometry} material={materials['branch3.003']} />
-                </group>
-                <group position={[-48.364, 7317.984, 17.792]} rotation={[0.63, 0.012, -1.604]} scale={172.863}>
-                  <mesh geometry={nodes.Circle002_bark_0003.geometry} material={materials['bark.003']} />
-                  <mesh geometry={nodes.Circle002_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Circle002_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Circle002_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group position={[-67.873, 6482.979, -81.545]} rotation={[0.803, -0.855, -0.8]} scale={119.98}>
-                  <mesh geometry={nodes.Circle003_bark_0003.geometry} material={materials['bark.003']} />
-                  <mesh geometry={nodes.Circle003_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Circle003_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Circle003_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group position={[52.839, 6630.423, 53.789]} rotation={[2.738, 0.875, 1.888]} scale={95.6}>
-                  <mesh geometry={nodes.Circle004_bark_0003.geometry} material={materials['bark.003']} />
-                  <mesh geometry={nodes.Circle004_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Circle004_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Circle004_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group position={[17.902, 7337.987, -57.831]} rotation={[2.22, -0.832, 0.633]} scale={154.316}>
-                  <mesh geometry={nodes.Circle005_bark_0002.geometry} material={materials['bark.003']} />
-                  <mesh geometry={nodes.Circle005_branch1_0002.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Circle005_branch2_0002.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Circle005_branch3_0002.geometry} material={materials['branch3.003']} />
-                </group>
-                <group position={[12.77, 7303.208, 51.436]} rotation={[0.94, 0.966, -2.503]} scale={143.435}>
-                  <mesh geometry={nodes.Circle006_bark_0003.geometry} material={materials['bark.003']} />
-                  <mesh geometry={nodes.Circle006_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Circle006_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Circle006_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group position={[-15.025, 7933.471, -67.27]} rotation={[2.308, -1.232, 0.66]} scale={88.968}>
-                  <mesh geometry={nodes.Circle007_bark_0003.geometry} material={materials['bark.003']} />
-                  <mesh geometry={nodes.Circle007_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Circle007_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Circle007_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group position={[13.382, 8265.338, -27.375]} rotation={[-2.807, 0.976, 1.444]} scale={78.715}>
-                  <mesh geometry={nodes.Circle008_bark_0003.geometry} material={materials['bark.003']} />
-                  <mesh geometry={nodes.Circle008_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Circle008_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Circle008_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group position={[12.77, 8147.922, 14.404]} rotation={[1.636, 0.965, 2.932]} scale={125.338}>
-                  <mesh geometry={nodes.Circle009_bark_0003.geometry} material={materials['bark.003']} />
-                  <mesh geometry={nodes.Circle009_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Circle009_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Circle009_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group position={[-26.838, 8189.854, -70.993]} rotation={[-0.101, -1.066, -1.408]} scale={94.869}>
-                  <mesh geometry={nodes.Circle010_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Circle010_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Circle010_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group position={[61.14, 7293.428, -44.724]} rotation={[2.32, -0.231, 1.388]} scale={172.863}>
-                  <mesh geometry={nodes.Circle011_bark_0002.geometry} material={materials['bark.003']} />
-                  <mesh geometry={nodes.Circle011_branch1_0002.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Circle011_branch2_0002.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Circle011_branch3_0002.geometry} material={materials['branch3.003']} />
-                </group>
-                <group position={[-104.705, 6389.588, 23.231]} rotation={[0.396, 0.616, -1.808]} scale={119.98}>
-                  <mesh geometry={nodes.Circle012_bark_0002.geometry} material={materials['bark.003']} />
-                  <mesh geometry={nodes.Circle012_branch1_0002.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Circle012_branch2_0002.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Circle012_branch3_0002.geometry} material={materials['branch3.003']} />
-                </group>
-                <group position={[42.705, 7817.256, -18.905]} rotation={[2.516, 0.442, 1.673]} scale={154.316}>
-                  <mesh geometry={nodes.Circle013_bark_0003.geometry} material={materials['bark.003']} />
-                  <mesh geometry={nodes.Circle013_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Circle013_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Circle013_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group position={[-30.573, 7540.441, -27.101]} rotation={[0.326, -0.695, -1.464]} scale={97.14}>
-                  <mesh geometry={nodes.Circle014_bark_0003.geometry} material={materials['bark.003']} />
-                  <mesh geometry={nodes.Circle014_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Circle014_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Circle014_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group position={[-51.467, 7751.617, 11.69]} rotation={[0.21, 0.549, -1.288]} scale={149.233}>
-                  <mesh geometry={nodes.Circle015_bark_0003.geometry} material={materials['bark.003']} />
-                  <mesh geometry={nodes.Circle015_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Circle015_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Circle015_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group position={[-54.644, 8036.361, -36.685]} rotation={[-0.151, 0.064, -1.42]} scale={115.232}>
-                  <mesh geometry={nodes.Circle016_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Circle016_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Circle016_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group position={[5.876, 7981.33, -68.672]} rotation={[-2.932, 0.009, 1.467]} scale={76.436}>
-                  <mesh geometry={nodes.Circle017_branch1_0002.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Circle017_branch2_0002.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Circle017_branch3_0002.geometry} material={materials['branch3.003']} />
-                </group>
-                <group
-                  position={[16.171, 8575.266, -13.12]}
-                  rotation={[0.04, 0.282, 0.143]}
-                  scale={[-67.028, -285.895, -285.895]}
-                >
-                  <mesh geometry={nodes.Plane002_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Plane002_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Plane002_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group
-                  position={[18.114, 8551.562, -25.267]}
-                  rotation={[0.279, 0.054, -1.098]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane003_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Plane003_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Plane003_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group
-                  position={[18.114, 8551.562, -25.267]}
-                  rotation={[2.863, -0.057, 2.054]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane004_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Plane004_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Plane004_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group
-                  position={[18.114, 8551.562, -25.267]}
-                  rotation={[1.991, 1.261, -3.095]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane005_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Plane005_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Plane005_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group
-                  position={[18.114, 8551.562, -25.267]}
-                  rotation={[1.253, -1.276, 0.145]}
-                  scale={[-70.846, -302.178, -302.178]}
-                >
-                  <mesh geometry={nodes.Plane006_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Plane006_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Plane006_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group
-                  position={[37.329, 8897.122, -10.203]}
-                  rotation={[0.579, 0.836, -1.41]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane007_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Plane007_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Plane007_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group
-                  position={[37.329, 8897.122, -10.203]}
-                  rotation={[2.709, -0.857, 1.734]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane008_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Plane008_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Plane008_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group
-                  position={[37.329, 8897.122, -10.203]}
-                  rotation={[2.805, 0.57, 2.243]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane010_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Plane010_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Plane010_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group
-                  position={[37.329, 8897.122, -10.203]}
-                  rotation={[0.602, -0.345, -0.343]}
-                  scale={[-49.062, -209.264, -209.264]}
-                >
-                  <mesh geometry={nodes.Plane011_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Plane011_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Plane011_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group
-                  position={[25.534, 8774.9, -17.099]}
-                  rotation={[0.434, -0.856, -0.746]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane012_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Plane012_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Plane012_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group
-                  position={[25.534, 8774.9, -17.099]}
-                  rotation={[2.71, 0.854, 2.404]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane013_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Plane013_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Plane013_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group
-                  position={[25.534, 8774.9, -17.099]}
-                  rotation={[0.374, 0.705, -1.334]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane014_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Plane014_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Plane014_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <group
-                  position={[25.534, 8774.9, -17.099]}
-                  rotation={[2.781, -0.672, 1.816]}
-                  scale={[-69.124, -294.833, -294.833]}
-                >
-                  <mesh geometry={nodes.Plane015_branch1_0003.geometry} material={materials['branch1.003']} />
-                  <mesh geometry={nodes.Plane015_branch2_0003.geometry} material={materials['branch2.003']} />
-                  <mesh geometry={nodes.Plane015_branch3_0003.geometry} material={materials['branch3.003']} />
-                </group>
-                <mesh
-                  geometry={nodes.Circle018_bark_mid_0002.geometry}
-                  material={materials['bark_mid.003']}
-                  position={[83.749, 1025.212, -11.27]}
-                  rotation={[-Math.PI / 2, 1.169, 0]}
-                  scale={11.791}
-                />
-                <mesh
-                  geometry={nodes.Circle019_bark_mid_0002.geometry}
-                  material={materials['bark_mid.003']}
-                  position={[-49.271, 1043.091, 64.329]}
-                  rotation={[-0.351, -0.324, -1.687]}
-                  scale={11.791}
-                />
-                <mesh
-                  geometry={nodes.Circle022_bark_mid_0002.geometry}
-                  material={materials['bark_mid.003']}
-                  position={[56.968, 1635.867, 68.022]}
-                  rotation={[-0.49, 0.806, -1.203]}
-                  scale={16.789}
-                />
-                <mesh
-                  geometry={nodes.Circle025_bark_mid_0002.geometry}
-                  material={materials['bark_mid.003']}
-                  position={[-20.28, 2349.585, 100.068]}
-                  rotation={[-0.396, 0.033, -1.551]}
-                  scale={15.474}
-                />
-                <mesh
-                  geometry={nodes.Circle026_bark_mid_0002.geometry}
-                  material={materials['bark_mid.003']}
-                  position={[-94.33, 2336.846, -44.714]}
-                  rotation={[-2.351, -0.873, 2.263]}
-                  scale={15.474}
-                />
-                <mesh
-                  geometry={nodes.Circle027_bark_mid_0002.geometry}
-                  material={materials['bark_mid.003']}
-                  position={[40.275, 3057.289, 38.437]}
-                  rotation={[-0.996, 1.047, -0.758]}
-                  scale={15.738}
-                />
-                <mesh
-                  geometry={nodes.Circle029_bark_mid_0002.geometry}
-                  material={materials['bark_mid.003']}
-                  position={[-47.681, 3060.384, -130.629]}
-                  rotation={[-2.65, -0.257, 1.74]}
-                  scale={20.491}
-                />
-                <mesh
-                  geometry={nodes.Circle030_bark_mid_0002.geometry}
-                  material={materials['bark_mid.003']}
-                  position={[-57.841, 4258.626, -30.211]}
-                  rotation={[-1.869, -0.921, 2.93]}
-                  scale={19.343}
-                />
-                <mesh
-                  geometry={nodes.Circle032_bark_mid_0002.geometry}
-                  material={materials['bark_mid.003']}
-                  position={[-10.037, 3671.256, 59.462]}
-                  rotation={[-0.436, 0.409, -1.542]}
-                  scale={26.261}
-                />
-                <mesh
-                  geometry={nodes.Circle033_bark_mid_0002.geometry}
-                  material={materials['bark_mid.003']}
-                  position={[-57.841, 3841.275, -30.211]}
-                  rotation={[-1.882, -0.853, 2.966]}
-                  scale={21.04}
-                />
-              </group>
-            </group>
-          </group>
           <group position={[-0.24, 0.479, 1.143]} rotation={[-0.48, -0.192, -2.478]} scale={0.145}>
             <group rotation={[Math.PI / 2, 0, 0]}>
               <mesh
+                castShadow
+                receiveShadow
                 geometry={nodes.Plant_Fern_Plant_Texture_0002.geometry}
                 material={materials['Plant_Texture.005']}
                 position={[-1.915, -1.435, -1.589]}
@@ -1879,37 +481,31 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
               />
             </group>
           </group>
-          <group position={[1.209, 1.116, -0.152]} rotation={[-1.554, 0.001, -3.091]} scale={0.015}>
+          <group position={[0.154, 1.111, -0.035]} rotation={[-1.554, 0.001, -3.091]} scale={0.015}>
             <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
               <group position={[0.001, 0, 0]}>
                 <group
-                  position={[5487.164, 350.697, -1577.162]}
+                  position={[-237.005, 182.906, -396.379]}
                   rotation={[-1.72, -0.015, 1.26]}
                   scale={[270.945, 270.945, 134.51]}
                 >
                   <mesh
+                    castShadow
+                    receiveShadow
                     geometry={nodes.Cube015_Big_rock_3_0001.geometry}
-                    material={materials['Big_rock_3.001']}
-                    position={[-0.656, -5.229, -1.865]}
+                    material={materials.Material}
+                    position={[0.082, 0.647, 0.728]}
                     rotation={[-0.303, -0.098, -0.058]}
                   />
                 </group>
               </group>
             </group>
           </group>
-          <group position={[0.287, 0.125, 1.214]} rotation={[0.173, 0.261, -1.299]} scale={0.231}>
-            <group rotation={[Math.PI / 2, 0, 0]}>
-              <mesh
-                geometry={nodes.Plant_Palm2_Plant_Texture_0002.geometry}
-                material={materials['Plant_Texture.006']}
-                position={[3.786, -3.512, -4.277]}
-                rotation={[-0.96, -0.006, -0.341]}
-              />
-            </group>
-          </group>
           <group position={[-0.26, 0.139, 1.402]} rotation={[-0.251, 0.049, -3.129]} scale={0.071}>
             <group rotation={[Math.PI / 2, 0, 0]}>
               <mesh
+                castShadow
+                receiveShadow
                 geometry={nodes.Plant_Palm1_Plant_Texture_0001.geometry}
                 material={materials['Plant_Texture.007']}
                 position={[-4.515, -3.8, 0.175]}
@@ -1917,22 +513,242 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, ...props
               />
             </group>
           </group>
-          <group position={[-0.205, -1.211, 0.251]} rotation={[1.535, -0.331, -0.161]} scale={0.231}>
-            <group rotation={[Math.PI / 2, 0, 0]}>
+          <group position={[0.412, 1.13, 0.004]} rotation={[-1.561, 0.197, -0.068]} scale={0.122}>
+            <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
               <mesh
-                geometry={nodes.Plant_Palm2_Plant_Texture_0003.geometry}
-                material={materials['Plant_Texture.008']}
-                position={[0.011, 0.001, 0.345]}
+                castShadow
+                receiveShadow
+                geometry={nodes.Circle046_Material015_0.geometry}
+                material={materials['Material.003']}
+                position={[4.483, 162.587, -49.478]}
+                rotation={[-Math.PI / 2, 0, 0]}
+                scale={100}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Circle047_Material014_0.geometry}
+                material={materials['Material.004']}
+                position={[11.053, -4.696, -29.593]}
+                rotation={[-Math.PI / 2, 0, 0]}
+                scale={100}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Cylinder469_Material005_0.geometry}
+                material={materials['Material.001']}
+                position={[6.808, -79.281, -47.587]}
+                rotation={[-Math.PI / 2, 0, -0.303]}
+                scale={100}
               />
             </group>
           </group>
-          <group position={[-0.789, -0.975, 0.148]} rotation={[1.538, -0.401, -0.156]} scale={0.231}>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Object_2.geometry}
+            material={materials.tree}
+            position={[0.04, 0.901, -0.101]}
+            rotation={[-Math.PI / 2, 0, 0]}
+            scale={0.106}
+          />
+          <group position={[1.029, -0.104, -0.093]} rotation={[-Math.PI / 2, 0, 0]} scale={0.098}>
             <mesh
-              geometry={nodes.Plant_Palm2_Plant_Texture_0004.geometry}
-              material={materials['Plant_Texture.009']}
-              rotation={[Math.PI / 2, 0, 0]}
+              castShadow
+              receiveShadow
+              geometry={nodes.Object_2001.geometry}
+              material={materials.tree}
+              rotation={[-2.643, 1.141, 2.422]}
             />
           </group>
+          <group position={[0.573, -0.573, 0.793]} rotation={[0.835, 0.495, -2.439]} scale={0.079}>
+            <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Circle046_Material015_0001.geometry}
+                material={materials['Material.003']}
+                position={[4.483, 162.587, -49.478]}
+                rotation={[-Math.PI / 2, 0, 0]}
+                scale={100}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Circle047_Material014_0001.geometry}
+                material={materials['Material.004']}
+                position={[11.053, -4.696, -29.593]}
+                rotation={[-Math.PI / 2, 0, 0]}
+                scale={100}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Cylinder469_Material005_0001.geometry}
+                material={materials['Material.001']}
+                position={[6.808, -79.281, -47.587]}
+                rotation={[-Math.PI / 2, 0, -0.303]}
+                scale={100}
+              />
+            </group>
+          </group>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Object_2008.geometry}
+            material={materials.tree}
+            position={[-0.686, -0.79, -0.011]}
+            rotation={[1.579, -0.363, 0.498]}
+            scale={0.067}
+          />
+          <group position={[-1.17, -0.337, 0.043]} rotation={[1.906, -1.437, -2.812]} scale={0.171}>
+            <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Circle046_Material015_0002.geometry}
+                material={materials['Material.003']}
+                position={[4.483, 162.587, -49.478]}
+                rotation={[-Math.PI / 2, 0, 0]}
+                scale={100}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Circle047_Material014_0002.geometry}
+                material={materials['Material.004']}
+                position={[11.053, -4.696, -29.593]}
+                rotation={[-Math.PI / 2, 0, 0]}
+                scale={100}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Cylinder469_Material005_0002.geometry}
+                material={materials['Material.001']}
+                position={[6.808, -79.281, -47.587]}
+                rotation={[-Math.PI / 2, 0, -0.303]}
+                scale={100}
+              />
+            </group>
+          </group>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Object_2009.geometry}
+            material={materials.tree}
+            position={[-0.166, -1.015, -0.019]}
+            rotation={[1.557, -0.288, 0.573]}
+            scale={0.067}
+          />
+          <group position={[0.358, 0.676, 0.874]} rotation={[-0.599, 0.271, 0.191]} scale={0.094}>
+            <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Circle046_Material015_0003.geometry}
+                material={materials['Material.003']}
+                position={[4.483, 162.586, -49.478]}
+                rotation={[-Math.PI / 2, 0, 0]}
+                scale={100}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Circle047_Material014_0003.geometry}
+                material={materials['Material.004']}
+                position={[11.053, -4.696, -29.593]}
+                rotation={[-Math.PI / 2, 0, 0]}
+                scale={100}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Cylinder469_Material005_0003.geometry}
+                material={materials['Material.001']}
+                position={[6.808, -79.281, -47.587]}
+                rotation={[-Math.PI / 2, 0, -0.303]}
+                scale={100}
+              />
+            </group>
+          </group>
+          <group position={[0.454, -0.637, 0.667]} rotation={[1.025, 0.488, -2.171]} scale={0.075}>
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Object_2010.geometry}
+              material={materials['tree.001']}
+              scale={0.778}
+            />
+          </group>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Object_2011.geometry}
+            material={materials['tree.002']}
+            position={[-0.545, 0.909, -0.238]}
+            rotation={[-1.56, -0.523, 0.071]}
+            scale={0.046}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Object_2012.geometry}
+            material={materials['tree.002']}
+            position={[-0.625, 0.906, -0.046]}
+            rotation={[-1.386, -0.558, -0.903]}
+            scale={0.046}
+          />
+          <group position={[-0.736, -0.037, 0.859]} rotation={[0.022, -0.857, -0.187]} scale={0.078}>
+            <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Circle046_Material015_0004.geometry}
+                material={materials['Material.017']}
+                position={[-25.13, 139.047, -15.651]}
+                rotation={[-Math.PI / 2, 0, 0]}
+                scale={100}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Circle047_Material014_0004.geometry}
+                material={materials['Material.018']}
+                position={[-18.56, -28.236, 4.233]}
+                rotation={[-Math.PI / 2, 0, 0]}
+                scale={100}
+              />
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Cylinder469_Material005_0004.geometry}
+                material={materials['Material.016']}
+                position={[-22.805, -102.82, -13.761]}
+                rotation={[-Math.PI / 2, 0, -0.303]}
+                scale={100}
+              />
+            </group>
+          </group>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.rock_3.geometry}
+            material={materials['Material.020']}
+            position={[0.403, 0.619, 0.815]}
+            rotation={[-0.703, 0.444, 0.463]}
+            scale={0.023}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.rock_2.geometry}
+            material={materials['Material.019']}
+            position={[-1.107, -0.175, -0.174]}
+            rotation={[1.17, -1.151, 0.089]}
+            scale={[0.036, 0.026, 0.024]}
+          />
         </group>
       </a.group>
     </a.group>
