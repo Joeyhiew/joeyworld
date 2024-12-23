@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import Popup from '../components/Popup.jsx';
 import { Environment } from '@react-three/drei';
@@ -11,28 +11,48 @@ import { useAdjustGlobeForScreenSize } from '../hooks/useAdjustGlobeForScreenSiz
 import { useAdjustPlaneForScreenSize } from '../hooks/useAdjustPlaneForScreenSize.js';
 import Navbar from '../components/Navbar.jsx';
 import sunset from '../assets/venice_sunset_1k.hdr';
+import { useCallback } from 'react';
+import UserGuide from '../components/Userguide.jsx';
+
+const NewUserGuideKey = 'joey_world_first_time_user';
 
 const Home = () => {
+  const [isReady, setIsReady] = useState(true);
   const [isRotating, setIsRotating] = useState(false);
   const [currentStage, setCurrentStage] = useState(null);
 
   const [globeScale, globePosition, globeRotation] = useAdjustGlobeForScreenSize();
-  const [planeScale, planePosition, planeRotation] = useAdjustPlaneForScreenSize();
+  const [planeScale, planePosition] = useAdjustPlaneForScreenSize();
+  const shouldDisplayGuide = sessionStorage.getItem(NewUserGuideKey) !== 'false';
+
+  const handleUnmountLoader = useCallback(() => {
+    setIsReady(true);
+  }, []);
+
+  const handleMountLoader = useCallback(() => {
+    setIsReady(false);
+  }, []);
+
+  const handleStartMove = useCallback(() => {
+    sessionStorage.setItem(NewUserGuideKey, 'false');
+  }, []);
 
   return (
     <section className="w-full h-screen relative">
       <div className="absolute top-20 left-0 right-0 z-10 flex justify-center items-center">
         <Popup currentStage={currentStage} />
       </div>
-      <Navbar />
+      {isReady && <Navbar />}
+
+      {isReady && shouldDisplayGuide && <UserGuide />}
+
       <Canvas
         className={`w-full h-screen relative ${isRotating ? 'cursor-grabbing' : 'cursor-grab'}`}
         camera={{ near: 0.1, far: 1000 }}
         shadows
       >
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<Loader onUnmount={handleUnmountLoader} onMount={handleMountLoader} />}>
           <Environment files={sunset} />
-
           {/* <directionalLight position={[1, 1, 1]} intensity={2} shadow={true} castShadow={directionalCtl.castShadow} /> */}
           <directionalLight
             // color={'#CB818E'}
@@ -78,6 +98,7 @@ const Home = () => {
             isRotating={isRotating}
             setIsRotating={setIsRotating}
             setCurrentStage={setCurrentStage}
+            onStartMove={handleStartMove}
           />
         </Suspense>
       </Canvas>

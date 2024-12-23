@@ -1,8 +1,16 @@
 import { Html } from '@react-three/drei';
 import { useProgress } from '@react-three/drei';
+import { useEffect } from 'react';
 
-const Loader = () => {
+const Loader = ({ onUnmount, onMount }) => {
   const { progress } = useProgress();
+
+  useEffect(() => {
+    onMount();
+    return () => {
+      onUnmount();
+    };
+  }, []);
 
   return (
     <Html className="left-[-22vw] flex flex-col items-center">

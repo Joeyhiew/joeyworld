@@ -23,6 +23,7 @@ import arrow from './arrow.svg';
 import contact from './contact.svg';
 import mail from './mail.svg';
 import geometry from './geometryBG.jpeg';
+import draghold from './drag_animation.svg';
 
 export {
   css,
@@ -50,4 +51,5 @@ export {
   contact,
   mail,
   geometry,
+  draghold,
 };
