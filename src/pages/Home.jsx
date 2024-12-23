@@ -22,7 +22,7 @@ const Home = () => {
   const [currentStage, setCurrentStage] = useState(null);
 
   const [globeScale, globePosition, globeRotation] = useAdjustGlobeForScreenSize();
-  const [planeScale, planePosition] = useAdjustPlaneForScreenSize();
+  const [planeScale, planePosition, planeRotation] = useAdjustPlaneForScreenSize();
   const shouldDisplayGuide = sessionStorage.getItem(NewUserGuideKey) !== 'false';
 
   const handleUnmountLoader = useCallback(() => {
@@ -39,7 +39,7 @@ const Home = () => {
 
   return (
     <section className="w-full h-screen relative">
-      <div className="absolute top-20 left-0 right-0 z-10 flex justify-center items-center">
+      <div className="absolute top-20 max-[480px]:top-32 max-[545px]:top-40 left-0 right-0 z-10 flex justify-center items-center">
         <Popup currentStage={currentStage} />
       </div>
       {isReady && <Navbar />}
@@ -87,7 +87,7 @@ const Home = () => {
             position={planePosition}
             scale={planeScale}
             isRotating={isRotating}
-            rotation={[0.75, 1.3, 0]}
+            rotation={planeRotation}
             castShadow
           />
           <Sky isRotating={isRotating} />

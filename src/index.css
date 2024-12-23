@@ -68,7 +68,7 @@ body:has(.card[data-color='green']:hover) {
   }
 
   .cta {
-    @apply flex items-center flex-row max-[380px]:flex-col gap-2 justify-center bg-slate-200 rounded-2xl py-2 px-8 max-[380px]:px-4 hover:gap-6 transition-all duration-700;
+    @apply flex items-center flex-row max-[380px]:flex-col gap-2 justify-center bg-slate-200 rounded-2xl py-2 px-8 max-[380px]:px-4 hover:gap-6 transition-all duration-300;
   }
 
   .cta-text {

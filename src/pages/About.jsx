@@ -3,7 +3,7 @@ import { Breadcrumb } from 'antd';
 
 const About = () => {
   return (
-    <section className="mx-72 my-24">
+    <section className="mx-72 my-24 max-[1024px]:mx-32 max-[545px]:mx-24 max-[380px]:mx-16">
       <Breadcrumb
         separator={<p className="text-secondary-text-dark">/</p>}
         items={[

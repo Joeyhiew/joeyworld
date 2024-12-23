@@ -19,6 +19,7 @@ import twitter from './twitter.svg';
 import pricewise from './pricewise.svg';
 import snapgram from './snapgram.svg';
 import threads from './threads.svg';
+import { Arrow } from './arrow.jsx';
 import arrow from './arrow.svg';
 import contact from './contact.svg';
 import mail from './mail.svg';
@@ -47,6 +48,7 @@ export {
   pricewise,
   snapgram,
   threads,
+  Arrow,
   arrow,
   contact,
   mail,

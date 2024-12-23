@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { arrow, github, linkedin, mail, geometry } from '../assets/icons';
+import { Arrow, arrow, github, linkedin, mail, geometry } from '../assets/icons';
 import { useState } from 'react';
 import { useCallback } from 'react';
 
@@ -28,18 +28,19 @@ const Popup = ({ currentStage }) => {
         return (
           <>
             <p className="font-medium sm:text-xl text-center">
-              My journey as a software engineer started in University, where i studied computer science
+              My journey as a software engineer started in University, where I studied computer science
             </p>
             <article className="flex flex-row justify-center">
-              <img src={geometry} alt="arrow" className="w-12 h-12 object-contain rounded-lg mr-2" />
+              <img src={geometry} alt="sonification-geometry" className="w-12 h-12 object-contain rounded-lg mr-2" />
 
               <div className="flex flex-col">
                 <p className="font-medium sm:text-xl ">Sonification of Geometry</p>
-                <p>A Unity3D application to improve 3D perception</p>
+                <p className="block max-[380px]:hidden">A Unity3D application to improve 3D perception</p>
               </div>
             </article>
             <button className="cta font-bold ">
               <p> View Bachelor Thesis</p>
+              {/* <Arrow className="w-4 h-4 object-contain" fill={'#ffffff'} /> */}
               <img src={arrow} alt="arrow" className="w-4 h-4 object-contain" />
             </button>
           </>
@@ -70,11 +71,9 @@ const Popup = ({ currentStage }) => {
         return (
           <>
             <p className="font-medium sm:text-xl text-center">
-              My main focus lies on the front-end in
-              <br />
-              Javascript and React development
+              My main focus lies on the front-end in Javascript and React development
             </p>
-            I enjoy building beautiful and interactive applications
+            <p className="sm:text-xl text-center">I enjoy building beautiful and interactive applications</p>
           </>
         );
       }
