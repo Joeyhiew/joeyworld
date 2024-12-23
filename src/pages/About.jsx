@@ -8,7 +8,7 @@ const About = () => {
         items={[
           {
             title: (
-              <NavLink to="/" className="w-10 h-10 items-center justify-center flex font-bold">
+              <NavLink to="/" className="items-center justify-center flex font-bold">
                 <p className="text-primary-text">JOEYs WORLD</p>
               </NavLink>
             ),

@@ -10,6 +10,7 @@ import Plane from '../models/Plane';
 import { useState } from 'react';
 import { useAdjustGlobeForScreenSize } from '../hooks/useAdjustGlobeForScreenSize.js';
 import { useAdjustPlaneForScreenSize } from '../hooks/useAdjustPlaneForScreenSize.js';
+import Navbar from '../components/Navbar.jsx';
 
 const Home = () => {
   const [isRotating, setIsRotating] = useState(false);
@@ -33,6 +34,7 @@ const Home = () => {
       <div className="absolute top-20 left-0 right-0 z-10 flex justify-center items-center">
         <Popup currentStage={currentStage} />
       </div>
+      <Navbar />
       <Canvas
         className={`w-full h-screen relative ${isRotating ? 'cursor-grabbing' : 'cursor-grab'}`}
         camera={{ near: 0.1, far: 1000 }}

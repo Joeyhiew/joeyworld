@@ -78,10 +78,10 @@ const Popup = ({ currentStage }) => {
     }
 
     return null;
-  }, []);
+  }, [currentStage]);
 
   // set opacity change for animation fade
-  return <div className={`info-box ${currentStage ? 'opacity-100' : 'opacity-0'}`}>{renderContent()}</div>;
+  return <div className={`info-box ${currentStage ? 'opacity-100' : 'opacity-0'}`}>{renderContent}</div>;
 };
 
 export default Popup;
