@@ -28,6 +28,15 @@ const Popup = ({ currentStage }) => {
         return (
           <>
             <p className="font-medium sm:text-xl text-center">
+              Hey there, I'm Joey, a frontend developer from Singapore.
+            </p>
+          </>
+        );
+      }
+      if (stage === 2) {
+        return (
+          <>
+            <p className="font-medium sm:text-xl text-center">
               I graduated from Nanyang Technological University with B.Eng in Computer Science (Highest Distinction)
             </p>
           </>
@@ -42,7 +51,7 @@ const Popup = ({ currentStage }) => {
         );
       }
 
-      if (stage === 2)
+      if (stage === 3)
         return (
           <>
             <article className="flex flex-row justify-center">
@@ -61,17 +70,18 @@ const Popup = ({ currentStage }) => {
           </>
         );
 
-      if (stage === 3) {
+      if (stage === 4) {
         return (
           <>
             <p className="font-medium sm:text-xl text-center">
-              After graduating, I joined TikTok as a frontend developer and worked on exciting projects in TikTop Shop.
+              After graduating, I joined TikTok as a frontend developer, where I thrive on engaging with dynamic,
+              high-impact projects that spark excitement and challenge.
             </p>
           </>
         );
       }
 
-      if (stage === 4) {
+      if (stage === 5) {
         return (
           <>
             <p className="font-medium text-center sm:text-xl">
@@ -82,22 +92,21 @@ const Popup = ({ currentStage }) => {
         );
       }
 
-      if (stage === 5) {
+      if (stage === 6) {
         return (
           <>
             <p className="font-medium sm:text-xl text-center">
-              My main focus lies on the front-end in Javascript and React development
+              My primary expertise revolves around front-end development, specializing in JavaScript and React.
             </p>
-            <p className="sm:text-xl text-center">I enjoy building beautiful and interactive applications</p>
             <p className="sm:text-xl text-center">
-              Building interactive and beautiful interfaces always gives me a sense of gratification as each part of the
-              application comes to life
+              I derive immense joy from crafting visually stunning and interactive applications, as seeing the page
+              spring to life brings me a deep sense of fulfillment.
             </p>
           </>
         );
       }
 
-      if (stage === 6) {
+      if (stage === 7) {
         return (
           <>
             <p className="font-medium sm:text-xl text-center">Want to connect?</p>

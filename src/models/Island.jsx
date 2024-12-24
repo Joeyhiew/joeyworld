@@ -137,23 +137,26 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, onStartM
 
     // Set the current stage based on the island's orientation
     switch (true) {
-      case normalizedRotation >= 0.5 && normalizedRotation <= 0.85:
+      case (normalizedRotation >= 0 && normalizedRotation <= 0.2) || normalizedRotation >= 6.75:
         setCurrentStage(1);
         break;
-      case normalizedRotation >= 0.85 && normalizedRotation <= 1.2:
+      case normalizedRotation >= 0.5 && normalizedRotation <= 0.85:
         setCurrentStage(2);
         break;
-      case normalizedRotation >= 1.85 && normalizedRotation <= 2.3:
+      case normalizedRotation >= 0.85 && normalizedRotation <= 1.2:
         setCurrentStage(3);
         break;
-      case normalizedRotation >= 3.25 && normalizedRotation <= 3.9:
+      case normalizedRotation >= 1.85 && normalizedRotation <= 2.3:
         setCurrentStage(4);
         break;
-      case normalizedRotation >= 4.45 && normalizedRotation <= 4.85:
+      case normalizedRotation >= 3.25 && normalizedRotation <= 3.9:
         setCurrentStage(5);
         break;
-      case normalizedRotation >= 5.35 && normalizedRotation <= 5.75:
+      case normalizedRotation >= 4.45 && normalizedRotation <= 4.85:
         setCurrentStage(6);
+        break;
+      case normalizedRotation >= 5.35 && normalizedRotation <= 5.75:
+        setCurrentStage(7);
         break;
       default:
         setCurrentStage(null);
