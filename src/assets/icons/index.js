@@ -1,5 +1,4 @@
 import css from './css.svg';
-import express from './express.svg';
 import git from './git.svg';
 import github from './github.svg';
 import html from './html.svg';
@@ -20,7 +19,6 @@ import draghold from './drag_animation.svg';
 
 export {
   css,
-  express,
   git,
   github,
   html,
