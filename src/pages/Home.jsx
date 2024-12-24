@@ -90,7 +90,7 @@ const Home = () => {
             rotation={planeRotation}
             castShadow
           />
-          <Sky isRotating={isRotating} />
+          <Sky isRotating={isRotating} setIsRotating={setIsRotating} />
           <Island
             position={globePosition}
             scale={globeScale}

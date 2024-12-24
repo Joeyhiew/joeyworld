@@ -1,18 +1,165 @@
 import { useGLTF } from '@react-three/drei';
 import skyScene from '../assets/3d/sunsetsky1.glb';
-import { useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useRef, useEffect } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
 import { a } from '@react-spring/three';
 
-const Sky = ({ isRotating }) => {
+const Sky = ({ isRotating, setIsRotating }) => {
   const { nodes, materials } = useGLTF(skyScene);
+  const { gl, viewport } = useThree();
   const skyRef = useRef();
+  let wheelEventEndTimeout = null;
 
-  useFrame((_, delta) => {
+  const lastX = useRef(0);
+  const rotationSpeed = useRef(0);
+  const dampingFactor = 0.95;
+
+  // Handle pointer (mouse or touch) down event
+  const handlePointerDown = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    setIsRotating(true);
+
+    // Calculate the clientX based on whether it's a touch event or a mouse event
+    const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+
+    // Store the current clientX position for reference
+    lastX.current = clientX;
+  };
+
+  // Handle pointer (mouse or touch) up event
+  const handlePointerUp = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    setIsRotating(false);
+  };
+
+  const handlePointerLeave = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    setIsRotating(false);
+  };
+
+  // Handle pointer (mouse or touch) move event
+  const handlePointerMove = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
     if (isRotating) {
-      skyRef.current.rotation.z += 0.15 * delta;
+      // If rotation is enabled, calculate the change in clientX position
+      const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+
+      // calculate the change in the horizontal position of the mouse cursor or touch input,
+      // relative to the viewport's width
+      const delta = (clientX - lastX.current) / viewport.width;
+
+      // Update the island's rotation based on the mouse/touch movement
+      skyRef.current.rotation.z -= delta * 0.0005 * Math.PI;
+
+      // Update the reference for the last clientX position
+      lastX.current = clientX;
+
+      // Update the rotation speed
+      rotationSpeed.current = delta * 0.0005 * Math.PI;
+    }
+  };
+
+  // Touch events for mobile devices
+  const handleTouchStart = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setIsRotating(true);
+
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    lastX.current = clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setIsRotating(false);
+  };
+
+  const handleTouchMove = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    if (isRotating) {
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const delta = (clientX - lastX.current) / viewport.width;
+
+      skyRef.current.rotation.z -= delta * 0.0005 * Math.PI;
+      lastX.current = clientX;
+      rotationSpeed.current = delta * 0.0005 * Math.PI;
+    }
+  };
+
+  const handleScroll = (e) => {
+    clearTimeout(wheelEventEndTimeout);
+    wheelEventEndTimeout = setTimeout(() => {
+      setIsRotating(false);
+    }, 100);
+    setIsRotating(true);
+    e.stopPropagation();
+    e.preventDefault();
+
+    const deltaX = e.deltaX;
+    const clientX = e.clientX;
+
+    if (isRotating) {
+      const delta = (deltaX - lastX.current) / viewport.width;
+
+      skyRef.current.rotation.z -= deltaX * 0.00005 * Math.PI;
+      lastX.current = clientX;
+      rotationSpeed.current = deltaX * 0.00005 * Math.PI;
+    }
+  };
+
+  useFrame(() => {
+    // If not rotating, apply damping to slow down the rotation (smoothly)
+    if (!isRotating) {
+      // Apply damping factor
+      rotationSpeed.current *= dampingFactor;
+
+      // Stop rotation when speed is very small
+      if (Math.abs(rotationSpeed.current) < 0.001) {
+        rotationSpeed.current = 0;
+      }
+
+      skyRef.current.rotation.z -= rotationSpeed.current;
     }
   });
+  useEffect(() => {
+    // Add event listeners for pointer and keyboard events
+    const canvas = gl.domElement;
+    canvas.addEventListener('pointerdown', handlePointerDown);
+    canvas.addEventListener('pointerup', handlePointerUp);
+    canvas.addEventListener('pointermove', handlePointerMove);
+    canvas.addEventListener('touchstart', handleTouchStart);
+    canvas.addEventListener('touchend', handleTouchEnd);
+    canvas.addEventListener('touchmove', handleTouchMove);
+    canvas.addEventListener('mouseleave', handlePointerLeave);
+    canvas.addEventListener('scroll', handleScroll);
+    canvas.addEventListener('wheel', handleScroll);
+
+    // Remove event listeners when component unmounts
+    return () => {
+      canvas.removeEventListener('pointerdown', handlePointerDown);
+      canvas.removeEventListener('pointerup', handlePointerUp);
+      canvas.removeEventListener('pointermove', handlePointerMove);
+      canvas.removeEventListener('touchstart', handleTouchStart);
+      canvas.removeEventListener('touchend', handleTouchEnd);
+      canvas.removeEventListener('touchmove', handleTouchMove);
+      canvas.removeEventListener('mouseleave', handlePointerLeave);
+      canvas.removeEventListener('scroll', handleScroll);
+      canvas.removeEventListener('wheel', handleScroll);
+    };
+  }, [gl, handlePointerDown, handlePointerUp, handlePointerMove]);
+
+  // useFrame((_, delta) => {
+  //   if (isRotating) {
+  //     skyRef.current.rotation.z += 0.15 * delta;
+  //   }
+  // });
 
   return (
     <a.group ref={skyRef} position={[0, -20, -10]}>

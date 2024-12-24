@@ -9,6 +9,7 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, onStartM
   const islandRef = useRef();
   const { gl, viewport } = useThree();
   const { nodes, materials } = useGLTF(islandScene);
+  let wheelEventEndTimeout = null;
 
   const lastX = useRef(0);
   const rotationSpeed = useRef(0);
@@ -95,6 +96,27 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, onStartM
     }
   };
 
+  const handleScroll = (e) => {
+    clearTimeout(wheelEventEndTimeout);
+    wheelEventEndTimeout = setTimeout(() => {
+      setIsRotating(false);
+    }, 100);
+    setIsRotating(true);
+    e.stopPropagation();
+    e.preventDefault();
+
+    const deltaX = e.deltaX;
+    const clientX = e.clientX;
+
+    if (isRotating) {
+      const delta = (deltaX - lastX.current) / viewport.width;
+
+      islandRef.current.rotation.z -= deltaX * 0.0005 * Math.PI;
+      lastX.current = clientX;
+      rotationSpeed.current = deltaX * 0.0005 * Math.PI;
+    }
+  };
+
   useFrame(() => {
     // If not rotating, apply damping to slow down the rotation (smoothly)
     if (!isRotating) {
@@ -115,20 +137,23 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, onStartM
 
     // Set the current stage based on the island's orientation
     switch (true) {
-      case normalizedRotation >= 0.8 && normalizedRotation <= 1.2:
+      case normalizedRotation >= 0.5 && normalizedRotation <= 0.85:
         setCurrentStage(1);
         break;
-      case normalizedRotation >= 1.85 && normalizedRotation <= 2.3:
+      case normalizedRotation >= 0.85 && normalizedRotation <= 1.2:
         setCurrentStage(2);
         break;
-      case normalizedRotation >= 3.25 && normalizedRotation <= 3.9:
+      case normalizedRotation >= 1.85 && normalizedRotation <= 2.3:
         setCurrentStage(3);
         break;
-      case normalizedRotation >= 4.45 && normalizedRotation <= 4.85:
+      case normalizedRotation >= 3.25 && normalizedRotation <= 3.9:
         setCurrentStage(4);
         break;
-      case normalizedRotation >= 5.35 && normalizedRotation <= 5.75:
+      case normalizedRotation >= 4.45 && normalizedRotation <= 4.85:
         setCurrentStage(5);
+        break;
+      case normalizedRotation >= 5.35 && normalizedRotation <= 5.75:
+        setCurrentStage(6);
         break;
       default:
         setCurrentStage(null);
@@ -144,6 +169,8 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, onStartM
     canvas.addEventListener('touchend', handleTouchEnd);
     canvas.addEventListener('touchmove', handleTouchMove);
     canvas.addEventListener('mouseleave', handlePointerLeave);
+    canvas.addEventListener('scroll', handleScroll);
+    canvas.addEventListener('wheel', handleScroll);
 
     // Remove event listeners when component unmounts
     return () => {
@@ -154,6 +181,8 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, position, onStartM
       canvas.removeEventListener('touchend', handleTouchEnd);
       canvas.removeEventListener('touchmove', handleTouchMove);
       canvas.removeEventListener('mouseleave', handlePointerLeave);
+      canvas.removeEventListener('scroll', handleScroll);
+      canvas.removeEventListener('wheel', handleScroll);
     };
   }, [gl, handlePointerDown, handlePointerUp, handlePointerMove]);
 

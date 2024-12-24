@@ -24,12 +24,27 @@ const Popup = ({ currentStage }) => {
 
   const renderContent = useCallback(
     ({ stage }) => {
-      if (stage === 1)
+      if (stage === 1) {
         return (
           <>
             <p className="font-medium sm:text-xl text-center">
-              My journey as a software engineer started in University, where I studied computer science
+              I graduated from Nanyang Technological University with B.Eng in Computer Science (Highest Distinction)
             </p>
+          </>
+        );
+      }
+
+      if (stage === 810) {
+        return (
+          <>
+            <p>Here in university, I participated in CTFs and build several mid sized applications</p>
+          </>
+        );
+      }
+
+      if (stage === 2)
+        return (
+          <>
             <article className="flex flex-row justify-center">
               <img src={geometry} alt="sonification-geometry" className="w-12 h-12 object-contain rounded-lg mr-2" />
 
@@ -38,7 +53,7 @@ const Popup = ({ currentStage }) => {
                 <p className="block max-[380px]:hidden">A Unity3D application to improve 3D perception</p>
               </div>
             </article>
-            <button className="cta font-bold ">
+            <button className="cta font-bold" onClick={() => window.open('https://dr.ntu.edu.sg/handle/10356/153177')}>
               <p> View Bachelor Thesis</p>
               {/* <Arrow className="w-4 h-4 object-contain" fill={'#ffffff'} /> */}
               <img src={arrow} alt="arrow" className="w-4 h-4 object-contain" />
@@ -46,17 +61,17 @@ const Popup = ({ currentStage }) => {
           </>
         );
 
-      if (stage === 2) {
+      if (stage === 3) {
         return (
           <>
             <p className="font-medium sm:text-xl text-center">
-              After graduating, I worked in TikTok as a Frontend developer
+              After graduating, I joined TikTok as a frontend developer and worked on exciting projects in TikTop Shop.
             </p>
           </>
         );
       }
 
-      if (stage === 3) {
+      if (stage === 4) {
         return (
           <>
             <p className="font-medium text-center sm:text-xl">
@@ -67,18 +82,22 @@ const Popup = ({ currentStage }) => {
         );
       }
 
-      if (stage === 4) {
+      if (stage === 5) {
         return (
           <>
             <p className="font-medium sm:text-xl text-center">
               My main focus lies on the front-end in Javascript and React development
             </p>
             <p className="sm:text-xl text-center">I enjoy building beautiful and interactive applications</p>
+            <p className="sm:text-xl text-center">
+              Building interactive and beautiful interfaces always gives me a sense of gratification as each part of the
+              application comes to life
+            </p>
           </>
         );
       }
 
-      if (stage === 5) {
+      if (stage === 6) {
         return (
           <>
             <p className="font-medium sm:text-xl text-center">Want to connect?</p>
