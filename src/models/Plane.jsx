@@ -12,12 +12,12 @@ const Plane = ({ isRotating, ...props }) => {
 
   // Use an effect to control the plane's animation based on 'isRotating'
   useEffect(() => {
-    if (isRotating) {
-      actions['Main'].play();
-    } else {
-      actions['Main'].stop();
-    }
-  }, [actions, isRotating]);
+    // if (isRotating) {
+    actions['Main'].play();
+    // } else {
+    //   actions['Main'].stop();
+    // }
+  }, [actions]);
 
   return (
     <mesh {...props} ref={ref} castShadow>
