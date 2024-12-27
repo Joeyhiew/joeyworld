@@ -28,9 +28,8 @@ const Popup = ({ currentStage }) => {
         case 1:
           return (
             <>
-              <p className="font-medium sm:text-xl text-center">
-                Hey there, I'm Joey, a frontend developer from Singapore.
-              </p>
+              <p className="font-medium sm:text-3xl text-center">Hey there, I'm Joey</p>
+              <p className="font-medium sm:text-xl text-center">a frontend developer from Singapore.</p>
             </>
           );
         case 2:
@@ -59,7 +58,7 @@ const Popup = ({ currentStage }) => {
                 </div>
               </article>
               <button
-                className="cta font-bold"
+                className="cta font-bold w-full"
                 onClick={() => window.open('https://dr.ntu.edu.sg/handle/10356/153177')}
               >
                 <p> View Bachelor Thesis</p>
@@ -101,7 +100,7 @@ const Popup = ({ currentStage }) => {
         case 7:
           return (
             <>
-              <p className="font-medium sm:text-xl text-center">Want to connect?</p>
+              <p className="font-medium sm:text-2xl text-center">Want to connect?</p>
               <div className="flex flex-row gap-4">
                 <div className="icon-btn" onClick={() => window.open('https://www.linkedin.com/in/joey-hiew-mun-yee/')}>
                   <img src={linkedin} alt="linkedin" className="w-8 h-8 object-contain hover:w-10 hover:h-10" />
